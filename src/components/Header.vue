@@ -10,16 +10,16 @@
       v-if="screenWidth > 768"
       :router="isTrue"
     >
-      <el-menu-item class="home-label" index="/" route="/">VDOG</el-menu-item>
-      <el-menu-item index="4">
+      <el-menu-item class="home-label" index="/">VDOG</el-menu-item>
+      <el-menu-item index="/intro">
         <button class="intro-button">Introduction</button>
       </el-menu-item>
       <el-submenu index="3" popper-class="submenu">
         <template slot="title">Databases</template>
-        <el-menu-item index="3-1">plastidDB</el-menu-item>
-        <el-menu-item index="3-2">mitoDB</el-menu-item>
-        <el-menu-item index="3-3">Vis and Apps</el-menu-item>
-        <el-menu-item index="3-4">How to use</el-menu-item>
+        <el-menu-item index="/plastid">plastidDB</el-menu-item>
+        <el-menu-item index="/mito">mitoDB</el-menu-item>
+        <el-menu-item index="/home#vis">Vis and Apps</el-menu-item>
+        <el-menu-item index="/howto">How to use</el-menu-item>
         <el-submenu index="3-5" :popper-append-to-body="isTrue" popper-class="submenu">
           <template slot="title">Examples</template>
           <el-menu-item index="3-5-1">
@@ -40,7 +40,7 @@
           </el-menu-item>
         </el-submenu>
       </el-submenu>
-      <el-menu-item index="/home" route="/home">Home</el-menu-item>
+      <el-menu-item index="/home">Home</el-menu-item>
     </el-menu>
 
     <el-menu
@@ -57,14 +57,14 @@
         <template slot="title">
           <i class="el-icon-menu"></i>
         </template>
-        <el-menu-item index="/" route="/">VDOG</el-menu-item>
-        <el-menu-item index="/home" route="/home">Home</el-menu-item>
+        <el-menu-item index="/">VDOG</el-menu-item>
+        <el-menu-item index="/home">Home</el-menu-item>
         <el-submenu index="1-3" :popper-append-to-body="isTrue" popper-class="submenu">
           <template slot="title">Databases</template>
-          <el-menu-item index="1-3-1">plastidDB</el-menu-item>
-          <el-menu-item index="1-3-2">mitoDB</el-menu-item>
-          <el-menu-item index="1-3-3">Vis and Apps</el-menu-item>
-          <el-menu-item index="1-3-4">How to use</el-menu-item>
+          <el-menu-item index="/plastid">plastidDB</el-menu-item>
+          <el-menu-item index="/mito">mitoDB</el-menu-item>
+          <el-menu-item index="/home#vis">Vis and Apps</el-menu-item>
+          <el-menu-item index="/howto">How to use</el-menu-item>
           <el-submenu index="1-3-5" :popper-append-to-body="isTrue" popper-class="submenu">
             <template slot="title">Examples</template>
             <el-menu-item index="1-3-5-1">
@@ -85,7 +85,7 @@
             </el-menu-item>
           </el-submenu>
         </el-submenu>
-        <el-menu-item index="1-4">
+        <el-menu-item index="/intro">
           <span>Introduction</span>
         </el-menu-item>
       </el-submenu>

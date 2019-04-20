@@ -1,7 +1,7 @@
 <template>
   <div id="page-wrapper">
     <!-- Banner -->
-    <section id="banner">
+    <section id="banner" class="image">
       <div class="content">
         <div>
           <h2>Visual Database for Organelle Genome</h2>
@@ -21,17 +21,17 @@
         <div>
           <h2>Organelle Database</h2>
           <p>
-            <a href="#two" class="scrolly">plastidDB</a> and
-            <a href="#three" class="scrolly">mitoDB</a>
+            <a href="#plastidDB" class="scrolly">plastidDB</a> and
+            <a href="#mitoDB" class="scrolly">mitoDB</a>
           </p>
         </div>
         <p>
-          <a href="plastidDB.php">plastidDB</a> is a web-based database for plastid DNA, currently it maintained over
+          <router-link to="/plastid">plastidDB</router-link>is a web-based database for plastid DNA, currently it maintained over
           <strong>1300+</strong> plastid DNA reference sequences and their related biology information, in which
           <strong>1000+</strong> are chloroplast DNA, also known as cpDNA.
         </p>
         <p>
-          <a href="mitoDB.php">mitoDB</a> is a web-based database for mitochondrion DNA, mtDNA, maintaining over
+          <router-link to="/mito">mitoDB</router-link>is a web-based database for mitochondrion DNA, mtDNA, maintaining over
           <strong>8000+</strong> reference sequences of mitochondrion DNA and their related biology information.
         </p>
       </div>
@@ -58,10 +58,7 @@
           <li>&nbsp;Genes, Proteins, and RNAs</li>
           <li>&nbsp;Database Visualization</li>
         </ul>
-        <el-button plain>plastidDB Entry</el-button>
-        <!-- <div class="actions">
-          <a href="plastidDB.php" class="button">plastidDB Entry</a>
-        </div>-->
+        <router-link to="/plastid" tag="el-button">plastidDB Entry</router-link>
       </div>
       <a href="#mitoDB" class="goto-next scrolly">Next</a>
     </section>
@@ -83,18 +80,15 @@
           <li>ORF Matcher</li>
           <li>Database Visualization</li>
         </ul>
-        <el-button plain>mitoDB Entry</el-button>
-        <!-- <div class="actions">
-          <a href="mitoDB.php" class="button">mitoDB Entry</a>
-        </div>-->
+        <router-link to="/mito" tag="el-button">mitoDB Entry</router-link>
       </div>
       <a href="#vis" class="goto-next scrolly">Next</a>
     </section>
 
     <!-- vis -->
-    <section id="vis" class="wrapper style1 special fade-up">
-      <div class="content head-title">
-        <div>
+    <section id="vis">
+      <div class="content">
+        <div class="head-title">
           <h2>Visualizations and Applications</h2>
           <p>Discovery in Visual Sense</p>
         </div>
@@ -183,6 +177,9 @@ a {
     border-color: transparent;
   }
 }
+a.image {
+  border: none;
+}
 .icon.alt {
   text-decoration: none;
   border-bottom: none;
@@ -237,7 +234,7 @@ a {
   padding: 4em 3em;
   font-size: pxTorem(18);
   text-align: left;
-  &.head-title > div:first-of-type {
+  & > div.head-title {
     display: flex;
     flex-flow: column;
     justify-content: flex-start;
@@ -254,10 +251,78 @@ a {
   }
   & > div {
     line-height: 2em;
+    margin-bottom: 1em;
     & > h2 {
       font-size: pxTorem(30);
       line-height: 2em;
     }
+  }
+  ul,
+  ol {
+    margin-bottom: 2em;
+    font-size: pxTorem(14);
+    line-height: 2em;
+    color: rgba(255, 255, 255, 0.75);
+    list-style: disc;
+    & > li {
+      padding-left: 0.5em;
+    }
+  }
+  section {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    & > h3 {
+      font-size: 20px;
+      line-height: 2em;
+      margin-bottom: 1em;
+    }
+    & > p {
+      color: rgba(255, 255, 255, 0.75);
+      font-size: 15px;
+      line-height: 2em;
+      margin-bottom: 2em;
+    }
+  }
+  p > strong,
+  li > strong {
+    color: #fff;
+  }
+  .el-button {
+    margin-bottom: 2em;
+    background: transparent;
+    color: #fff;
+    transition: border-color 0.2s ease-in-out, color 0.2s ease-in-out;
+    border-color: rgba(255, 255, 255, 0.3);
+    font-size: pxTorem(15);
+    &:hover {
+      border-color: #e44c65;
+      color: #e44c65;
+      background: transparent;
+    }
+  }
+}
+.image {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  width: 100%;
+  border-radius: 3px;
+  background-size: cover;
+  &::before {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: url("../assets/css/images/overlay.png");
+  }
+  & > img {
+    width: 100%;
   }
 }
 #page-wrapper {
@@ -265,7 +330,6 @@ a {
     width: 100%;
     min-height: 100vh;
     position: relative;
-    background-size: cover;
     background-attachment: fixed;
   }
   .label-back {
@@ -296,63 +360,13 @@ a {
     height: 100%;
     width: 21em;
   }
-  .content {
-    & > ul {
-      margin-top: 2em;
-      font-size: pxTorem(14);
-      line-height: 2em;
-      color: rgba(255, 255, 255, 0.75);
-      & > li {
-        &::before {
-          content: "";
-          display: inline-block;
-          width: 3px;
-          height: 3px;
-          border-radius: 50%;
-          background: rgba(255, 255, 255, 0.75);
-          vertical-align: middle;
-          margin-right: 1em;
-        }
-      }
-    }
-    & > .el-button {
-      margin-top: 2em;
-      background: transparent;
-      color: #fff;
-      transition: border-color 0.2s ease-in-out, color 0.2s ease-in-out;
-      border-color: rgba(255, 255, 255, 0.5);
-      font-size: pxTorem(15);
-      &:hover {
-        border-color: #e44c65;
-        color: #e44c65;
-      }
-    }
-  }
-  .image {
-    position: relative;
-    overflow: hidden;
-    &::before {
-      content: "";
-      display: block;
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background: url("../assets/css/images/overlay.png");
-    }
-  }
-  p > strong,
-  li > strong {
-    color: #fff;
-  }
 }
 #banner {
   display: flex;
   flex-flow: column;
   justify-content: center;
   align-items: center;
-  background: url("../assets/images/main.jpg");
+  background-image: url("../assets/images/main.jpg");
   position: relative;
   &::before {
     content: "";
@@ -393,7 +407,7 @@ a {
   }
 }
 #od {
-  background: url("../assets/images/cell.jpg");
+  background-image: url("../assets/images/cell.jpg");
   & > .content {
     display: flex;
     flex-flow: row;
@@ -411,10 +425,10 @@ a {
   }
 }
 #plastidDB {
-  background: url("../assets/images/cpDNA.jpg");
+  background-image: url("../assets/images/cpDNA.jpg");
 }
 #mitoDB {
-  background: url("../assets/images/mtDNA.jpg ");
+  background-image: url("../assets/images/mtDNA.jpg ");
 }
 #vis {
   & > .content {
@@ -424,9 +438,6 @@ a {
       justify-content: space-evenly;
       align-items: center;
       & > section {
-        display: flex;
-        flex-flow: column;
-        justify-content: center;
         align-items: center;
         width: 300px;
         & > div {
@@ -440,7 +451,6 @@ a {
           margin-bottom: 1em;
         }
         & > h3 {
-          font-size: 20px;
           & > a {
             color: #fff;
             border: none;
@@ -448,12 +458,6 @@ a {
               color: #e44c65;
             }
           }
-          margin-bottom: 1em;
-        }
-        & > p {
-          color: rgba(255, 255, 255, 0.75);
-          font-size: 16px;
-          margin-bottom: 2em;
         }
       }
     }
@@ -465,6 +469,9 @@ a {
     & > #banner > .content {
       height: 100%;
     }
+    & > #od > .content > div {
+      width: 100%;
+    }
     .content {
       align-items: center;
       flex-flow: column;
@@ -473,29 +480,29 @@ a {
       width: 100%;
       border-width: 0;
       border-top-width: pxTorem(5);
-      & > div {
-        width: 100%;
-        text-align: center;
-        font-size: pxTorem(35);
-        & > h2 {
-          font-size: pxTorem(50);
-        }
+    }
+  }
+  .content {
+    & > div {
+      width: 100%;
+      text-align: center;
+      font-size: pxTorem(40) !important;
+      & > h2 {
+        font-size: pxTorem(60) !important;
       }
-      & > p {
-        width: 100%;
-        margin-top: 2em;
-        font-size: pxTorem(35);
-      }
-      & > ul {
-        width: 100%;
-        margin-top: 2em;
-        font-size: pxTorem(35);
-      }
-      & > .el-button {
-        width: 100%;
-        margin: 2em 0;
-        font-size: pxTorem(35);
-      }
+    }
+    & > p {
+      width: 100% !important;
+      margin-bottom: 1em;
+      font-size: pxTorem(35) !important;
+    }
+    & > ul {
+      width: 100%;
+      font-size: pxTorem(35) !important;
+    }
+    & > .el-button {
+      width: 100%;
+      font-size: pxTorem(35) !important;
     }
   }
 }
