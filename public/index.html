@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="icon" href="<%= BASE_URL %>gene.ico">
+    <title>graduation-project-</title>
+    <script>
+        function rem() {
+          let htmlElem = document.documentElement;
+          let width = Math.min(htmlElem.getBoundingClientRect().width, 1920);
+          let fontSize = width * 100 / 1920 + 'px';
+          htmlElem.style.fontSize = fontSize;
+        }
+        void function() {
+          rem();
+          // window.addEventListener('resize', rem);
+        }();
+        function resizeHandler(newTempTime) {
+          this.rem();
+        }
+        window.addEventListener('resize', resizeHandler);
+      </script>
+  </head>
+  <body>
+    <noscript>
+      <strong>We're sorry but graduation-project- doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+  </body>
+</html>
