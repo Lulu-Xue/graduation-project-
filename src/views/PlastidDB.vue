@@ -6,9 +6,9 @@
     </div>
     <section>
       <section class="intro">
-        <a href="#" class="image">
+        <router-link to="/home#plastidDB" class="image">
           <img src="../assets/images/cpDNA_banner.jpg" alt="cpDNA">
-        </a>
+        </router-link>
         <h3>Plastids and their Genomes</h3>
         <p
           class="italic"
@@ -53,10 +53,9 @@
             autofocus
           ></el-input>
           <div class="buttons">
-            <el-button plain onclick="visitData(ncNumber.value,'cpDNA');" class="go">GO</el-button>
-            <el-button plain onclick>View List</el-button>
+            <el-button class="special">GO</el-button>
+            <router-link to="entry.php?Type=plast" tag="el-button">View List</router-link>
           </div>
-          <!-- <a href="entry.php?Type=plast" class="button small"></a> -->
         </section>
         <hr size="1">
         <section>
@@ -66,26 +65,23 @@
           <h3>Examples</h3>
           <p>
             All the plastid DNAs have their own web page, you can visit the
-            <a
-              href="intro.php"
-            >Introduction</a> page to know the organization of the information. Here are some examples:
+            <router-link to="/intro">Introduction</router-link>page to know the organization of the information. Here are some examples:
           </p>
           <ul>
             <li>
-              <a href="dataview.php?id=NC_000932.1&type=cpDNA">
+              <router-link to="dataview.php?id=NC_000932.1&type=cpDNA">
                 cpDNA:
                 <i>Arabidopsis thaliana</i>
-              </a>
+              </router-link>
             </li>
             <li>
-              <a href="dataview.php?id=NC_009143.1&type=cpDNA">
+              <router-link to="dataview.php?id=NC_009143.1&type=cpDNA">
                 cpDNA:
                 <i>Populus trichocarpa</i>
-              </a>
+              </router-link>
             </li>
           </ul>
-          <el-button plain onclick>How to</el-button>
-          <!-- <a href="howto.php#palstidDB" class="button small">How to</a> -->
+          <router-link to="/howto#plastidDB" tag="el-button">How to</router-link>
         </section>
       </section>
     </section>
@@ -98,6 +94,14 @@ export default {
     return {
       input: ""
     };
+  },
+  mounted() {
+    this.$nextTick(function() {
+      this.$parent.cancelLoading();
+    });
+  },
+  beforeDestroy() {
+    this.$parent.openLoading();
   }
 };
 </script>
@@ -109,6 +113,10 @@ export default {
   align-items: flex-start;
   width: 100%;
   position: relative;
+  & > section > .image,
+  & > section > section > .image {
+    margin-bottom: 2em;
+  }
   & > .intro {
     width: 62%;
     & > .image {
@@ -129,7 +137,7 @@ export default {
   .el-button {
     margin-top: 2em;
     font-size: 12px;
-    &.go {
+    &.special {
       background: #e44c65;
       border-color: #e44c65;
       &:hover {

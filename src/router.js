@@ -5,6 +5,7 @@ import Intro from './views/Introduction.vue'
 import PlastidDB from './views/PlastidDB.vue'
 import MitoDB from './views/MitoDB.vue'
 import HowTo from './views/HowTo.vue'
+import Vis from './views/Visualization/index.vue'
 
 Vue.use(Router)
 
@@ -15,7 +16,11 @@ export default new Router({
     if (to.hash) {
       return { selector: to.hash }
     }
-    return { x: 0, y: 0 }
+    if (savedPosition) {
+      return savedPosition;
+    } else {
+      return { x: 0, y: 0 }
+    }
   },
   routes: [
     {
@@ -64,6 +69,15 @@ export default new Router({
       component: Intro,
       meta: {
         title: 'VDOG: Introduction'
+      }
+    },
+    {
+      path: '/vis/:type',
+      name: 'visualization',
+      component: Vis,
+      props: true,
+      meta: {
+        title: 'Database Visualization: '
       }
     },
     // {

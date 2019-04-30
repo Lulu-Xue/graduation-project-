@@ -5,7 +5,7 @@
       <p>Visual Database for Organelle Genome</p>
     </div>
     <section>
-      <router-link to="/home#banner" class="image">
+      <router-link to="/home#od" class="image">
         <img src="../assets/images/blend.png" alt="blend">
       </router-link>
       <h3>About Organelle Genome</h3>
@@ -25,8 +25,8 @@
         >Organelle Genome Resources</a> from
         <a href="https://www.ncbi.nlm.nih.gov/">NCBI</a>, and published the
         <router-link to="/">VDOG: Visual Database for Organelle Genome</router-link>. This database maintains the reference sequences of 8000+ mitochondrion DNAs (named
-        <router-link to="./mitoDB.php">mitoDB</router-link>) and 1300+ plastid DNAs (
-        <router-link to="./plastidDB.php">plastidDB</router-link>) in which 1000+ are chloroplast DNAs, as well as their related biology information, including Feature table, CDS sequence, RNA information and etc (See the example of
+        <router-link to="/mito">mitoDB</router-link>) and 1300+ plastid DNAs (
+        <router-link to="/plastid">plastidDB</router-link>) in which 1000+ are chloroplast DNAs, as well as their related biology information, including Feature table, CDS sequence, RNA information and etc (See the example of
         <router-link to="dataview.php?id=NC_000932.1&type=cpDNA">
           cpDNA:
           <i>Arabidopsis thaliana</i>
@@ -48,7 +48,7 @@
       </ul>
       <p>
         See also:
-        <router-link to="howto.php">VDOG: How to</router-link>
+        <router-link to="/howto">VDOG: How to</router-link>
       </p>
 
       <h3>Related Project: Phylogenetic Analysis Toolkits</h3>
@@ -76,7 +76,7 @@
           <a href="https://www.ncbi.nlm.nih.gov/genome/organelle/">Organelle Genome Resources</a> by
           <a href="https://www.ncbi.nlm.nih.gov/">NCBI</a>
         </li>
-        <li>
+        <li style="color:transparent;">
           <ul>
             <li>
               <a href="https://www.ncbi.nlm.nih.gov/genome/browse/?report=5">Browse by Organism</a>
@@ -107,7 +107,15 @@
 
 <script>
 export default {
-  name: "introduction"
+  name: "introduction",
+  mounted() {
+    this.$nextTick(function() {
+      this.$parent.cancelLoading();
+    });
+  },
+  beforeDestroy() {
+    this.$parent.openLoading();
+  }
 };
 </script>
 
@@ -117,6 +125,9 @@ export default {
   flex-flow: column;
   justify-content: flex-start;
   align-items: flex-start;
+  & > .image {
+    margin-bottom: 2em;
+  }
   & > .vis {
     margin-bottom: 0;
   }

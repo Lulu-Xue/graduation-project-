@@ -22,19 +22,19 @@
         <el-menu-item index="/howto">How to use</el-menu-item>
         <el-submenu index="3-5" :popper-append-to-body="isTrue" popper-class="submenu">
           <template slot="title">Examples</template>
-          <el-menu-item index="3-5-1">
+          <el-menu-item index="dataview.php?id=NC_000932.1&type=cpDNA">
             cpDNA:
             <span class="italic">Arabidopsis thaliana</span>
           </el-menu-item>
-          <el-menu-item index="3-5-2">
+          <el-menu-item index="dataview.php?id=NC_009143.1&type=cpDNA">
             cpDNA:
             <span class="italic">Populus trichocarpa</span>
           </el-menu-item>
-          <el-menu-item index="3-5-3">
+          <el-menu-item index="dataview.php?id=NC_006915.1&type=mtDNA">
             mtDNA:
             <span class="italic">Mus musculus molossinus</span>
           </el-menu-item>
-          <el-menu-item index="3-5-4">
+          <el-menu-item index="dataview.php?id=NC_024511.2&type=mtDNA">
             mtDNA:
             <span class="italic">Drosophila melanogaster</span>
           </el-menu-item>
@@ -67,19 +67,19 @@
           <el-menu-item index="/howto">How to use</el-menu-item>
           <el-submenu index="1-3-5" :popper-append-to-body="isTrue" popper-class="submenu">
             <template slot="title">Examples</template>
-            <el-menu-item index="1-3-5-1">
+            <el-menu-item index="dataview.php?id=NC_000932.1&type=cpDNA">
               cpDNA:
               <span class="italic">Arabidopsis thaliana</span>
             </el-menu-item>
-            <el-menu-item index="1-3-5-2">
+            <el-menu-item index="dataview.php?id=NC_009143.1&type=cpDNA">
               cpDNA:
               <span class="italic">Populus trichocarpa</span>
             </el-menu-item>
-            <el-menu-item index="1-3-5-3">
+            <el-menu-item index="dataview.php?id=NC_006915.1&type=mtDNA">
               mtDNA:
               <span class="italic">Mus musculus molossinus</span>
             </el-menu-item>
-            <el-menu-item index="3-5-4">
+            <el-menu-item index="dataview.php?id=NC_024511.2&type=mtDNA">
               mtDNA:
               <span class="italic">Drosophila melanogaster</span>
             </el-menu-item>

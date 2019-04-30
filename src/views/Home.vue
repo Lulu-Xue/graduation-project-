@@ -96,14 +96,14 @@
           <section>
             <div class="icon alt major fa-history"></div>
             <h3>
-              <a href="visualization.php?type=oh">Organelle History</a>
+              <router-link :to="toVisObj[0]">Organelle History</router-link>
             </h3>
             <p>Timeline for decades</p>
           </section>
           <section>
             <div class="icon alt major fa-list-alt"></div>
             <h3>
-              <a href="entry.php">Species List</a>
+              <router-link to="entry.php">Species List</router-link>
             </h3>
             <p>Browse by Species Name</p>
           </section>
@@ -120,21 +120,21 @@
           <section>
             <div class="icon alt major fa-map-o"></div>
             <h3>
-              <a href="visualization.php?type=rs">RefSeq Map</a>
+              <router-link :to="toVisObj[1]">RefSeq Map</router-link>
             </h3>
             <p>Big Map of RefSeq</p>
           </section>
           <section>
             <div class="icon alt major fa-line-chart"></div>
             <h3>
-              <a href="visualization.php?type=sc">Scattered Comparison</a>
+              <router-link :to="toVisObj[2]">Scattered Comparison</router-link>
             </h3>
             <p>Control by parameter</p>
           </section>
           <section>
             <div class="icon alt major fa-cube"></div>
             <h3>
-              <a href="visualization.php?type=bs-3d">Bar Space</a>
+              <router-link :to="toVisObj[3]">Bar Space</router-link>
             </h3>
             <p>Feature Data in 3D</p>
           </section>
@@ -150,13 +150,37 @@
 
 export default {
   name: "home",
-  components: {
-    // HelloWorld
-  },
+  components: {},
   data() {
     return {
       screenWidth: document.body.clientWidth,
-      isTrue: true
+      isTrue: true,
+      toVisObj: [
+        {
+          name: "visualization",
+          params: {
+            type: "oh"
+          }
+        },
+        {
+          name: "visualization",
+          params: {
+            type: "rs"
+          }
+        },
+        {
+          name: "visualization",
+          params: {
+            type: "sc"
+          }
+        },
+        {
+          name: "visualization",
+          params: {
+            type: "bs-3d"
+          }
+        }
+      ]
     };
   },
   mounted() {
@@ -164,7 +188,14 @@ export default {
     window.addEventListener("resize", () => {
       this.screenWidth = document.body.clientWidth;
     });
-  }
+    this.$nextTick(function() {
+      this.$parent.cancelLoading();
+    });
+  },
+  beforeDestroy() {
+    this.$parent.openLoading();
+  },
+  methods: {}
 };
 </script>
 <style lang="scss">
@@ -182,10 +213,10 @@ a.image {
 }
 .icon.alt {
   text-decoration: none;
-  border-bottom: none;
   position: relative;
   text-decoration: none;
   font-size: 2em;
+  color: #272833;
   &:before {
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
@@ -193,7 +224,6 @@ a.image {
     font-style: normal;
     font-weight: normal;
     text-transform: none !important;
-    color: #272833 !important;
     text-shadow: 1px 0 0 rgba(255, 255, 255, 0.5),
       -1px 0 0 rgba(255, 255, 255, 0.5), 0 1px 0 rgba(255, 255, 255, 0.5),
       0 -1px 0 rgba(255, 255, 255, 0.5);
@@ -328,6 +358,7 @@ a.image {
 #page-wrapper {
   & > section {
     width: 100%;
+    height: auto;
     min-height: 100vh;
     position: relative;
     background-attachment: fixed;
@@ -360,102 +391,100 @@ a.image {
     height: 100%;
     width: 21em;
   }
-}
-#banner {
-  display: flex;
-  flex-flow: column;
-  justify-content: center;
-  align-items: center;
-  background-image: url("../assets/images/main.jpg");
-  position: relative;
-  &::before {
-    content: "";
-    display: block;
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(23, 24, 32, 0.98);
-  }
-  & > .content {
-    padding: 0 4em;
+  #banner {
     display: flex;
     flex-flow: column;
     justify-content: center;
-    align-items: flex-end;
-    text-align: right;
-    width: 100%;
-    position: absolute;
-    right: 0;
-    top: 0;
-    height: 100%;
-    & > div {
-      & > h2 {
-        font-size: pxTorem(36);
+    align-items: center;
+    background-image: url("../assets/images/main.jpg");
+    position: relative;
+    &::before {
+      content: "";
+      display: block;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(23, 24, 32, 0.98);
+    }
+    & > .content {
+      padding: 0 4em;
+      display: flex;
+      flex-flow: column;
+      justify-content: center;
+      align-items: flex-end;
+      text-align: right;
+      width: 100%;
+      z-index: 1;
+      height: 100%;
+      & > div {
+        & > h2 {
+          font-size: pxTorem(36);
+        }
+      }
+      & > .image {
+        font-size: pxTorem(14);
+        width: 18em;
+        height: 18em;
+        margin: 1em;
+        border-radius: 50%;
+        background: url("../assets/images/main.jpg");
+        background-size: cover;
       }
     }
-    & > .image {
-      font-size: pxTorem(14);
-      width: 18em;
-      height: 18em;
-      margin: 1em;
-      border-radius: 50%;
-      background: url("../assets/images/main.jpg");
-      background-size: cover;
-    }
   }
-}
-#od {
-  background-image: url("../assets/images/cell.jpg");
-  & > .content {
-    display: flex;
-    flex-flow: row;
-    justify-content: space-between;
-    align-items: flex-start;
-    & > div {
-      width: 33%;
-    }
-    & > p {
-      width: 30%;
-      font-size: pxTorem(14);
-      line-height: 2em;
-      color: rgba(255, 255, 255, 0.75);
-    }
-  }
-}
-#plastidDB {
-  background-image: url("../assets/images/cpDNA.jpg");
-}
-#mitoDB {
-  background-image: url("../assets/images/mtDNA.jpg ");
-}
-#vis {
-  & > .content {
-    & > .box {
+  #od {
+    background-image: url("../assets/images/cell.jpg");
+    & > .content {
       display: flex;
-      flex-flow: row wrap;
-      justify-content: space-evenly;
-      align-items: center;
-      & > section {
+      flex-flow: row;
+      justify-content: space-between;
+      align-items: flex-start;
+      & > div {
+        width: 33%;
+      }
+      & > p {
+        width: 30%;
+        font-size: pxTorem(14);
+        line-height: 2em;
+        color: rgba(255, 255, 255, 0.75);
+      }
+    }
+  }
+  #plastidDB {
+    background-image: url("../assets/images/cpDNA.jpg");
+  }
+  #mitoDB {
+    background-image: url("../assets/images/mtDNA.jpg ");
+  }
+  #vis {
+    & > .content {
+      & > .box {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-evenly;
         align-items: center;
-        width: 300px;
-        & > div {
-          height: 96px;
-          width: 96px;
-          border-radius: 50%;
-          background: #272833;
-          display: flex;
-          justify-content: center;
+        & > section {
           align-items: center;
-          margin-bottom: 1em;
-        }
-        & > h3 {
-          & > a {
-            color: #fff;
-            border: none;
-            &:hover {
-              color: #e44c65;
+          width: 300px;
+          & > div {
+            height: 96px;
+            width: 96px;
+            border-radius: 50%;
+            background: #272833;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 1em;
+          }
+          & > h3 {
+            & > a {
+              color: #fff;
+              border: none;
+              &:hover {
+                color: #e44c65;
+              }
             }
           }
         }
@@ -466,15 +495,14 @@ a.image {
 
 @media screen and (max-width: 768px) {
   #page-wrapper {
-    & > #banner > .content {
-      height: 100%;
-    }
     & > #od > .content > div {
       width: 100%;
     }
     .content {
+      display: flex;
       align-items: center;
-      flex-flow: column;
+      flex-flow: column !important;
+      justify-content: flex-start;
       text-align: center;
       height: auto;
       width: 100%;

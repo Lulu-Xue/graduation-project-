@@ -4,19 +4,14 @@
       <h2>How to use VDOG</h2>
       <p>A Brief tutorial to VDOG</p>
     </div>
-    <section>
-      <el-button plain>Basics</el-button>
-      <el-button plain>Entry</el-button>
-      <el-button plain>Viewer</el-button>
-      <el-button plain>Visualization</el-button>
-      <el-button plain>Application</el-button>
-      <!-- <a href="#basics" class="button small scrolly">Basics</a>
-      <a href="#entry" class="button small scrolly">Entry</a>
-      <a href="#viewer" class="button small scrolly">Viewer</a>
-      <a href="#visualization" class="button small scrolly">Visualization</a>
-      <a href="#application" class="button small scrolly">Application</a>-->
+    <section id="toc">
+      <router-link to="#basics" tag="el-button">Basics</router-link>
+      <router-link to="#entry" tag="el-button">Entry</router-link>
+      <router-link to="#viewer" tag="el-button">Viewer</router-link>
+      <router-link to="#visualization" tag="el-button">Visualization</router-link>
+      <router-link to="#application" tag="el-button">Application</router-link>
     </section>
-    <section>
+    <section id="basics">
       <h3>Database Basics</h3>
       <p>
         VDOG, Visual Database for Organelle Genome is an innovative database of the genome information in the organelles. Most of the data in VDOG are originally extracted from GeneBank, re-organized and represented.
@@ -44,9 +39,9 @@
       </p>
     </section>
 
-    <section>
+    <section id="plastidDB">
       <h4>
-        <router-link to="plastidDB.php">plastidDB</router-link>
+        <router-link to="/plastid">plastidDB</router-link>
       </h4>
       <p>
         <span class="image left">
@@ -57,14 +52,14 @@
       </p>
       <p>
         The
-        <router-link to="plastidDB.php">plastidDB page</router-link>has a search area, where user can input the NC Number of the plastid genome and jump to the
+        <router-link to="/plastid">plastidDB page</router-link>has a search area, where user can input the NC Number of the plastid genome and jump to the
         <router-link to="#viewer" class="scrolly">Genome Info Viewer</router-link>page to see the detailed information. Also, a full list of plastid genome is available.
       </p>
     </section>
 
-    <section>
+    <section id="mitoDB">
       <h4>
-        <router-link to="mitoDB.php">mitoDB</router-link>
+        <router-link to="/mito">mitoDB</router-link>
       </h4>
       <p>
         <span class="image right">
@@ -74,7 +69,7 @@
       </p>
       <p>
         The
-        <router-link to="mitoDB.php">mitoDB page</router-link>has a similar search area with plastidDB, where user can also use the NC Number of the mtDNA to access the
+        <router-link to="/mito">mitoDB page</router-link>has a similar search area with plastidDB, where user can also use the NC Number of the mtDNA to access the
         <router-link to="#viewer" class="scrolly">Genome Info Viewer</router-link>page and check the detailed information. A full list of mitochondrial genome is available as well.
       </p>
     </section>
@@ -163,7 +158,7 @@
       </ul>
     </section>
 
-    <section>
+    <section id="visualization">
       <h3>
         <router-link to="/home#vis">Data Visualization</router-link>
       </h3>
@@ -220,18 +215,18 @@
       </p>
     </section>
 
-    <section>
+    <section id="application">
       <h3>
-        <router-link to="home#vis">Data Application</router-link>
+        <router-link to="/home#vis">Data Application</router-link>
       </h3>
       <div class="box">
-        <div class="image fit">
+        <div class="image">
           <img src="../assets/images/CPTree.jpg" alt>
         </div>
-        <div class="image fit">
+        <div class="image">
           <img src="../assets/images/MTTree.jpg" alt>
         </div>
-        <div class="image fit">
+        <div class="image">
           <img src="../assets/images/more.jpg" alt>
         </div>
       </div>
@@ -266,60 +261,75 @@ export default {
         }
       ]
     };
+  },
+  mounted() {
+    this.$nextTick(function() {
+      this.$parent.cancelLoading();
+    });
+  },
+  beforeDestroy() {
+    this.$parent.openLoading();
   }
 };
 </script>
 <style lang="scss" scoped>
-.content > section {
-  display: block;
-  & > .el-button {
-    margin-bottom: 0.5em;
-    margin-top: 0.5em;
-  }
-  h4 {
-    font-size: 16px;
-    margin: 1em 0;
-    & > a {
-      color: #fff;
-      &:hover {
-        color: #e44c65;
+.content {
+  & > section {
+    display: block;
+    &#basics > h3 {
+      margin-top: 1em;
+    }
+    & > .el-button {
+      margin-bottom: 0.5em;
+      margin-top: 0.5em;
+    }
+    h4 {
+      font-size: 16px;
+      margin: 1em 0;
+      & > a {
+        color: #fff;
+        border-color: transparent;
+        &:hover {
+          color: #e44c65;
+        }
       }
     }
-  }
-  & > h3 {
-    & > a {
-      color: #fff;
-      &:hover {
-        color: #e44c65;
+    & > h3 {
+      & > a {
+        color: #fff;
+        border-color: transparent;
+        &:hover {
+          color: #e44c65;
+        }
       }
     }
-  }
-  & > .dbpage + p {
-    margin-top: 2em;
-  }
-  &:last-of-type > .box {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-evenly;
-    align-items: center;
-    & > div {
-			width: 300px;
-			height:100%;
-      margin: 0 1em 1em 0;
+    & > .dbpage + p {
+      margin-top: 2em;
     }
-  }
-  .image {
-    border: 1px solid #666;
-    width: 170px;
-    height: 170px;
-  }
-  .left {
-    float: left;
-    margin-right: 10px;
-  }
-  .right {
-    float: right;
-    margin-left: 10px;
+    &:last-of-type > .box {
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: space-evenly;
+      align-items: center;
+      & > div {
+        width: 300px;
+        height: 100%;
+        margin: 0 1em 1em 0;
+      }
+    }
+    .image {
+      border: 1px solid #666;
+      width: 170px;
+      height: 170px;
+    }
+    .left {
+      float: left;
+      margin-right: 10px;
+    }
+    .right {
+      float: right;
+      margin-left: 10px;
+    }
   }
 }
 </style>

@@ -60,6 +60,7 @@ export default {
       display: inline-block;
       padding: 0 1em;
       & > .icon.alt {
+        border-bottom: transparent;
         & > .label {
           display: none;
         }
@@ -75,6 +76,7 @@ export default {
       margin-left: 1.5em;
       & > a {
         color: inherit;
+        border-bottom: transparent;
       }
     }
   }

@@ -20,51 +20,47 @@
             autofocus
           ></el-input>
           <div class="buttons">
-            <el-button plain onclick="visitData(ncNumber.value,'cpDNA');" class="go">GO</el-button>
-            <el-button plain onclick>View List</el-button>
+            <el-button class="special">GO</el-button>
+            <router-link to="entry.php?Type=plast" tag="el-button">View List</router-link>
           </div>
-          <!-- <a href="entry.php?Type=plast" class="button small"></a> -->
         </section>
         <hr>
         <section>
-          <a href="examples.php#plastidDB" class="image fit">
+          <router-link to="examples.php#plastidDB" class="image">
             <img src="../assets/images/at.jpg" alt="at">
-          </a>
+          </router-link>
           <h3>Examples</h3>
           <p>
             All the mtDNAs have their own web page, you can visit the
-            <a
-              href="intro.php"
-            >Introduction</a> page to know the organization of the information. Here are some examples:
+            <router-link to="/intro">Introduction</router-link>page to know the organization of the information. Here are some examples:
           </p>
           <ul>
             <li>
-              <a href="dataview.php?id=NC_006915.1&type=mtDNA">
+              <router-link to="dataview.php?id=NC_006915.1&type=mtDNA">
                 mtDNA:
                 <i>Arabidopsis thaliana</i>
-              </a>
+              </router-link>
             </li>
             <li>
-              <a href="dataview.php?id=NC_006915.1&type=mtDNA">
+              <router-link to="dataview.php?id=NC_006915.1&type=mtDNA">
                 mtDNA:
                 <i>Mus musculus molossinus</i>
-              </a>
+              </router-link>
             </li>
             <li>
-              <a href="dataview.php?id=NC_024511.2&type=mtDNA">
+              <router-link to="dataview.php?id=NC_024511.2&type=mtDNA">
                 mtDNA:
                 <i>Drosophila melanogaster</i>
-              </a>
+              </router-link>
             </li>
           </ul>
-          <el-button plain onclick>How to</el-button>
-          <!-- <a href="howto.php#palstidDB" class="button small">How to</a> -->
+          <router-link to="/howto#mitoDB" tag="el-button">How to</router-link>
         </section>
       </section>
       <section class="intro">
-        <a href="#" class="image">
+        <router-link to="/home#mitoDB" class="image">
           <img src="../assets/images/mtDNA_banner.jpg" alt="mtDNA">
-        </a>
+        </router-link>
         <h3>Mitochondria and their Genome</h3>
         <p
           class="italic"
@@ -100,6 +96,14 @@ export default {
     return {
       input: ""
     };
+  },
+  mounted() {
+    this.$nextTick(function() {
+      this.$parent.cancelLoading();
+    });
+  },
+  beforeDestroy() {
+    this.$parent.openLoading();
   }
 };
 </script>
