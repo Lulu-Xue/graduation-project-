@@ -130,14 +130,22 @@
           href="https://www.ncbi.nlm.nih.gov/taxonomy"
         >NCBI Taxonomy Browser</a>.
       </p>
-      <router-link to="dataview.php?id=NC_000932.1&type=cpDNA" class="dbpage">
+      <a href="http://bio.njfu.edu.cn/CPTree/service/cpdata.php?id=NC_000932.1&type=vdog">
         <img
           class="image"
           style="border:1px solid #666;"
           src="../assets/images/dbpage.png"
           alt="dbpage"
         >
-      </router-link>
+      </a>
+      <!-- <router-link to="dataview.php?id=NC_000932.1&type=cpDNA" class="dbpage">
+        <img
+          class="image"
+          style="border:1px solid #666;"
+          src="../assets/images/dbpage.png"
+          alt="dbpage"
+        >
+      </router-link>-->
       <p>For most of the organelle genomes, such as mitochondrial and plastids, the Organelle Genome Viewer displays three parts of information:</p>
       <ul>
         <li>
@@ -177,7 +185,7 @@
         >Baidu Echarts</a> to communicate data or information as visual objects (e.g., dots, lines or bars) contained in graphics. Our aim is to communicate the organelle genome information clearly and efficiently to our end users. Currently, we provide three visualizations:
       </p>
       <p>
-        <router-link to="visualization.php?type=rs">
+        <router-link to="/vis/rs">
           <img class="image left" src="../assets/images/rs.png">
         </router-link>
         <strong>RefSeq Map</strong> shows the big map of RefSeqs, in which for each genome data, the X axis shows the percentage of GC content, the Y axis shows the size of each genome and the radius of the dot shows the number of genes annotated. When mouse over the dot, a pop-up window lists the detailed information, and click them will open the
@@ -185,11 +193,11 @@
       </p>
       <p>
         Sample Visualization:
-        <router-link to="visualization.php?type=rs">RefSeq Map of 500 Random Organelle Genome Data</router-link>
+        <router-link to="/vis/rs">RefSeq Map of 500 Random Organelle Genome Data</router-link>
       </p>
 
       <p>
-        <router-link to="visualization.php?type=sc">
+        <router-link to="/vis/sc">
           <img class="image right" src="../assets/images/sc.png">
         </router-link>
         <strong>Scattered Comparison</strong> is a visualization tool for multi parameter selection. We use multiple scatter plot to demonstrate the data distribution in all the dimensions, which are: Genome Size, Percentage of GC content, and Number of Genes, Pseudogenes, Proteins, tRNAs, rRNAs, and Other RNAs. The parallel view in the bottom left shares the same dimension. When mouse over the dot, a pop-up window lists the detailed information, and click them will open the
@@ -198,12 +206,12 @@
       <p>
         Sample Visualization:
         <router-link
-          to="visualization.php?type=sc"
+          to="/vis/sc"
         >Scattered Comparison of 200 Random Organelle Genome Data</router-link>
       </p>
 
       <p>
-        <router-link to="visualization.php?type=bs-3d">
+        <router-link to="/vis/bs-3d">
           <img class="image left" src="../assets/images/bs-3d.png">
         </router-link>
         <strong>Bar Space</strong> renders the data into 3D bars with WebGL 3D engine, in which the height means the value and the color shows the distribution. The bars' location in the space is based on their genome and parameters, which are Genome Size, Percentage of GC content, and Number of Genes, Pseudogenes, Proteins, tRNAs, rRNAs, and Other RNAs. When mouse over the bar, a pop-up window lists the detailed information, and click them will open the
@@ -211,7 +219,7 @@
       </p>
       <p>
         Sample Visualization:
-        <router-link to="visualization.php?type=bs-3d">Bar Space of 20 Random Organelle Genome Data</router-link>
+        <router-link to="/vis/bs-3d">Bar Space of 20 Random Organelle Genome Data</router-link>
       </p>
     </section>
 

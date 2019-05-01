@@ -22,21 +22,29 @@
         <el-menu-item index="/howto">How to use</el-menu-item>
         <el-submenu index="3-5" :popper-append-to-body="isTrue" popper-class="submenu">
           <template slot="title">Examples</template>
-          <el-menu-item index="dataview.php?id=NC_000932.1&type=cpDNA">
-            cpDNA:
-            <span class="italic">Arabidopsis thaliana</span>
+          <el-menu-item index>
+            <a href="http://bio.njfu.edu.cn/CPTree/service/cpdata.php?id=NC_000932.1&type=vdog">
+              cpDNA:
+              <span class="italic">Arabidopsis thaliana</span>
+            </a>
           </el-menu-item>
-          <el-menu-item index="dataview.php?id=NC_009143.1&type=cpDNA">
-            cpDNA:
-            <span class="italic">Populus trichocarpa</span>
+          <el-menu-item index>
+            <a href="http://bio.njfu.edu.cn/CPTree/service/cpdata.php?id=NC_009143.1&type=vdog">
+              cpDNA:
+              <span class="italic">Populus trichocarpa</span>
+            </a>
           </el-menu-item>
-          <el-menu-item index="dataview.php?id=NC_006915.1&type=mtDNA">
-            mtDNA:
-            <span class="italic">Mus musculus molossinus</span>
+          <el-menu-item index>
+            <a href="http://bio.njfu.edu.cn/MTTree/service/cpdata.php?id=NC_006915.1&type=vdog">
+              mtDNA:
+              <span class="italic">Mus musculus molossinus</span>
+            </a>
           </el-menu-item>
-          <el-menu-item index="dataview.php?id=NC_024511.2&type=mtDNA">
-            mtDNA:
-            <span class="italic">Drosophila melanogaster</span>
+          <el-menu-item index>
+            <a href="http://bio.njfu.edu.cn/MTTree/service/cpdata.php?id=NC_024511.2&type=vdog">
+              mtDNA:
+              <span class="italic">Drosophila melanogaster</span>
+            </a>
           </el-menu-item>
         </el-submenu>
       </el-submenu>
@@ -67,21 +75,29 @@
           <el-menu-item index="/howto">How to use</el-menu-item>
           <el-submenu index="1-3-5" :popper-append-to-body="isTrue" popper-class="submenu">
             <template slot="title">Examples</template>
-            <el-menu-item index="dataview.php?id=NC_000932.1&type=cpDNA">
-              cpDNA:
-              <span class="italic">Arabidopsis thaliana</span>
+            <el-menu-item index>
+              <a href="http://bio.njfu.edu.cn/CPTree/service/cpdata.php?id=NC_000932.1&type=vdog">
+                cpDNA:
+                <span class="italic">Arabidopsis thaliana</span>
+              </a>
             </el-menu-item>
-            <el-menu-item index="dataview.php?id=NC_009143.1&type=cpDNA">
-              cpDNA:
-              <span class="italic">Populus trichocarpa</span>
+            <el-menu-item index>
+              <a href="http://bio.njfu.edu.cn/CPTree/service/cpdata.php?id=NC_009143.1&type=vdog">
+                cpDNA:
+                <span class="italic">Populus trichocarpa</span>
+              </a>
             </el-menu-item>
-            <el-menu-item index="dataview.php?id=NC_006915.1&type=mtDNA">
-              mtDNA:
-              <span class="italic">Mus musculus molossinus</span>
+            <el-menu-item index>
+              <a href="http://bio.njfu.edu.cn/MTTree/service/cpdata.php?id=NC_006915.1&type=vdog">
+                mtDNA:
+                <span class="italic">Mus musculus molossinus</span>
+              </a>
             </el-menu-item>
-            <el-menu-item index="dataview.php?id=NC_024511.2&type=mtDNA">
-              mtDNA:
-              <span class="italic">Drosophila melanogaster</span>
+            <el-menu-item index>
+              <a href="http://bio.njfu.edu.cn/MTTree/service/cpdata.php?id=NC_024511.2&type=vdog">
+                mtDNA:
+                <span class="italic">Drosophila melanogaster</span>
+              </a>
             </el-menu-item>
           </el-submenu>
         </el-submenu>
@@ -113,6 +129,14 @@ export default {
   }
 };
 </script>
+<style lang="scss" scoped>
+a {
+  color: rgba(255, 255, 255, 0.75);
+  text-decoration: none;
+  border-color: transparent;
+}
+</style>
+
 <style lang="scss">
 .submenu {
   background: rgba(39, 40, 51, 0.765);

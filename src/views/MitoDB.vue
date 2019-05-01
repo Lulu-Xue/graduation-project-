@@ -26,9 +26,12 @@
         </section>
         <hr>
         <section>
-          <router-link to="examples.php#plastidDB" class="image">
-            <img src="../assets/images/at.jpg" alt="at">
-          </router-link>
+          <div class="image">
+            <img src="../assets/images/at.jpg" alt="examples#plastidDB">
+          </div>
+          <!-- <router-link to="examples.php#plastidDB" class="image">
+            <img src="../assets/images/at.jpg" alt="examples#plastidDB">
+          </router-link>-->
           <h3>Examples</h3>
           <p>
             All the mtDNAs have their own web page, you can visit the
@@ -36,22 +39,24 @@
           </p>
           <ul>
             <li>
-              <router-link to="dataview.php?id=NC_006915.1&type=mtDNA">
-                mtDNA:
-                <i>Arabidopsis thaliana</i>
-              </router-link>
-            </li>
-            <li>
-              <router-link to="dataview.php?id=NC_006915.1&type=mtDNA">
+              <a href="http://bio.njfu.edu.cn/MTTree/service/cpdata.php?id=NC_006915.1&type=vdog">
                 mtDNA:
                 <i>Mus musculus molossinus</i>
-              </router-link>
+              </a>
+              <!-- <router-link to="dataview.php?id=NC_006915.1&type=mtDNA">
+                mtDNA:
+                <i>Mus musculus molossinus</i>
+              </router-link>-->
             </li>
             <li>
-              <router-link to="dataview.php?id=NC_024511.2&type=mtDNA">
+              <a href="http://bio.njfu.edu.cn/MTTree/service/cpdata.php?id=NC_024511.2&type=vdog">
                 mtDNA:
                 <i>Drosophila melanogaster</i>
-              </router-link>
+              </a>
+              <!-- <router-link to="dataview.php?id=NC_024511.2&type=mtDNA">
+                mtDNA:
+                <i>Drosophila melanogaster</i>
+              </router-link>-->
             </li>
           </ul>
           <router-link to="/howto#mitoDB" tag="el-button">How to</router-link>

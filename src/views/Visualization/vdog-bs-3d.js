@@ -1,16 +1,11 @@
 import Vue from "vue";
 import { getNCType, getNCBIValues, randomList, switchColumn, colorRange, backColor, lineColor, textColor, disableColor } from "./ncbi.js"
 
-export function initPage(myChart, popNotification) {
-    Vue.axios.get("/genomes_organelles.txt").then((res) => {
+export async function initPage(myChart, oldNcList) {
+    let ncList = oldNcList;
+    await Vue.axios.get("/genomes_organelles.txt").then((res) => {
         let NCBIData = res.data.split("\n");
-        let ncNode = document.querySelector("#ncNumbers");
-        let ncList = null;
-        if (ncNode.value == "no nc") {
-            ncList = randomList(NCBIData, 20);
-            ncNode.value = ncList.join(",");
-            popNotification("There is no input data and 20 random genome data have been applied.")
-        }
+        if (!oldNcList) ncList = randomList(NCBIData, 20);
         let schema = [
             { name: 'name', index: 0, value: 'Organism/Name' },
             { name: 'Group', index: 1, value: 'Group' },
@@ -178,18 +173,19 @@ export function initPage(myChart, popNotification) {
             if (params.componentType === 'series') {
                 if (params.seriesType === 'bar3D') {
                     let nc = ncList[params.data.value[0]];
-                    window.open("dataview.php?type=" + getNCType(NCBIData, nc) + "&id=" + nc);
+                    window.open("http://bio.njfu.edu.cn/CPTree/service/cpdata.php?type=vdog&id=" + nc);
                 }
             }
         });
     });
+    if (!oldNcList) return ncList.join(",");
 }
 
 function data2Dto3D(data2D) {
     var re = new Array();
-    for (var i=0; i<data2D.length; i++) {
-        for (var j=0; j<data2D[i].length; j++) {
-            re.push( {value: [ i, j, data2D[i][j] ]} );
+    for (var i = 0; i < data2D.length; i++) {
+        for (var j = 0; j < data2D[i].length; j++) {
+            re.push({ value: [i, j, data2D[i][j]] });
         }
     }
     return re;
@@ -212,7 +208,6 @@ function readDataToMatrix(NCBIData, ncNumbers) {
             }
             if (re["data"][i][j] > re["max"]) re["max"] = re["data"][i][j];
             if (re["data"][i][j] < re["min"]) re["min"] = re["data"][i][j];
-
         }
     }
     return re;

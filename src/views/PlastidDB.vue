@@ -59,9 +59,12 @@
         </section>
         <hr size="1">
         <section>
-          <router-link to="examples.php#plastidDB" class="image">
-            <img src="../assets/images/at.jpg" alt>
-          </router-link>
+          <div class="image">
+            <img src="../assets/images/at.jpg" alt="examples#plastidDB">
+          </div>
+          <!-- <router-link to="examples.php#plastidDB" class="image">
+            <img src="../assets/images/at.jpg" alt="examples#plastidDB">
+          </router-link>-->
           <h3>Examples</h3>
           <p>
             All the plastid DNAs have their own web page, you can visit the
@@ -69,16 +72,24 @@
           </p>
           <ul>
             <li>
-              <router-link to="dataview.php?id=NC_000932.1&type=cpDNA">
+              <a href="http://bio.njfu.edu.cn/CPTree/service/cpdata.php?id=NC_000932.1&type=vdog">
                 cpDNA:
                 <i>Arabidopsis thaliana</i>
-              </router-link>
+              </a>
+              <!-- <router-link to="dataview.php?id=NC_000932.1&type=cpDNA">
+                cpDNA:
+                <i>Arabidopsis thaliana</i>
+              </router-link>-->
             </li>
             <li>
-              <router-link to="dataview.php?id=NC_009143.1&type=cpDNA">
+              <a href="http://bio.njfu.edu.cn/CPTree/service/cpdata.php?id=NC_009143.1&type=vdog">
                 cpDNA:
                 <i>Populus trichocarpa</i>
-              </router-link>
+              </a>
+              <!-- <router-link to="dataview.php?id=NC_009143.1&type=cpDNA">
+                cpDNA:
+                <i>Populus trichocarpa</i>
+              </router-link>-->
             </li>
           </ul>
           <router-link to="/howto#plastidDB" tag="el-button">How to</router-link>

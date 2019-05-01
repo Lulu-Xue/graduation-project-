@@ -11,7 +11,7 @@
       <h3>About Organelle Genome</h3>
       <p>
         Compared with nuclear genome, organelles have their own independent genome that encodes a range of genes directly related to producing energy for the cell. Mitochondria and non-photosynthetic plastids are the membrane-bound organelles that convert energy from foodstuffs into cellular energy, while chloroplasts are those use sunlight. Some plastids may also be used for starch storage and the synthesis of fatty acids and terpenes. The
-        <router-link to="visualization.php?type=oh">history of organelle genome research</router-link>can be trace back to
+        <router-link to="/vis/oh">history of organelle genome research</router-link>can be trace back to
         <router-link to="entry.php?Release%20Date=1986">1986</router-link>while the first organlle genome was published.
         <br>Research shows that organelles likely evolved from bacteria that were endocytosed by nucleated ancestral cells. From the full
         <router-link to="entry.php">Species List</router-link>, it is clear that metazoan, plant, fungal and other mitochondrial and plastid genomes tend to vary greatly in size and gene content with some of the genes required for the energy creating processes being made by the nuclear genome and imported. Researches also shows that many organisms use one genetic code to translate nuclear mRNAs, and a second one for their mitochondrial and plastid mRNAs.
@@ -27,23 +27,27 @@
         <router-link to="/">VDOG: Visual Database for Organelle Genome</router-link>. This database maintains the reference sequences of 8000+ mitochondrion DNAs (named
         <router-link to="/mito">mitoDB</router-link>) and 1300+ plastid DNAs (
         <router-link to="/plastid">plastidDB</router-link>) in which 1000+ are chloroplast DNAs, as well as their related biology information, including Feature table, CDS sequence, RNA information and etc (See the example of
-        <router-link to="dataview.php?id=NC_000932.1&type=cpDNA">
+        <a
+          href="http://bio.njfu.edu.cn/CPTree/service/cpdata.php?id=NC_000932.1&type=vdog"
+        >
           cpDNA:
           <i>Arabidopsis thaliana</i>
-        </router-link>for detail). User can browse and search in the databases as most of the databases provided, additionally we apply the data visualization technology from
+        </a>
+        <!-- <router-link to="dataview.php?id=NC_000932.1&type=cpDNA"></router-link> -->
+        for detail). User can browse and search in the databases as most of the databases provided, additionally we apply the data visualization technology from
         <a
           href="https://www.baidu.com/"
         >Baidu</a> to enable the visual data analysis via the web interface, currently we deploy three visualizations:
       </p>
       <ul>
         <li>
-          <router-link to="visualization.php?type=rs">RefSeq Map</router-link>
+          <router-link to="/vis/rs">RefSeq Map</router-link>
         </li>
         <li>
-          <router-link to="visualization.php?type=sc">Scattered Comparison</router-link>
+          <router-link to="/vis/sc">Scattered Comparison</router-link>
         </li>
         <li>
-          <router-link to="visualization.php?type=bs-3d">Bar Space in 3D</router-link>
+          <router-link to="/vis/bs-3d">Bar Space in 3D</router-link>
         </li>
       </ul>
       <p>
@@ -55,19 +59,19 @@
       <p>
         As a convenient experimental target with low substitution rates and high research values, Chloroplast DNA, cpDNA, has recently been widely investigated in comparative genetics. In a previous project, we published
         <a
-          href="../CPTree"
+          href="http://bio.njfu.edu.cn/CPTree/service/index.php"
         >a web-based phylogenetic tree generator using Chloroplast Genomes, called CPTree</a>, to aid the phylogenetic research of cpDNA. It implements an easy-to-use web interface for both the
         <a
-          href="../CPTree/service/index.php?mode=fast"
+          href="http://bio.njfu.edu.cn/CPTree/service/index.php?mode=fast"
         >fast-mode</a> and the
-        <a href="../CPTree/service/index.php?mode=normal">normal-mode</a> process. The fast mode uses the 16S or 23S ribosomal RNA and the normal-mode uses an automatic gene selection across the species in the phylogenetic analysis. In parallel with CPTree, we are also developing the
+        <a href="http://bio.njfu.edu.cn/CPTree/service/index.php?mode=normal">normal-mode</a> process. The fast mode uses the 16S or 23S ribosomal RNA and the normal-mode uses an automatic gene selection across the species in the phylogenetic analysis. In parallel with CPTree, we are also developing the
         <a
-          href="../MTTree/"
+          href="http://bio.njfu.edu.cn/MTTree/service/index.php"
         >MTTree, A web-based Phylogenetic Tree Generator using Mitochondrial Genomes</a>, to ease the relative work with mtDNAs.
       </p>
       <p>
         See also:
-        <a href="../CPTree/service/intro.php">Introduction to CPTree</a>
+        <a href="http://bio.njfu.edu.cn/CPTree/service/intro.php">Introduction to CPTree</a>
       </p>
 
       <h3>Useful Links:</h3>

@@ -20,7 +20,19 @@ export function getNCBIValues(NCBIData, NCNumbers) {
 		if (lines[i]) {
 			let nc_no = lines[i].split("\t")[4];
 			if (NCNumbers.indexOf(nc_no) >= 0) {
-				res.push(lines[i].split("\t"));
+				let line = lines[i].split("\t");
+				switch (line[3]) {
+					case 'plastid':
+						line[3] = "Plastid DNA"; break;
+					case 'mitochondrion':
+						line[3] = "mtDNA"; break;
+					case 'chloroplast':
+						line[3] = "cpDNA"; break;
+				}
+				for (let j = 6; j < line.length; j++) {
+					if (line[j] === '-') line[j] = 0;
+				}
+				res.push(line);
 				count++;
 			}
 			if (count === len) break;

@@ -103,18 +103,18 @@
           <section>
             <div class="icon alt major fa-list-alt"></div>
             <h3>
-              <router-link to="entry.php">Species List</router-link>
+              <router-link :to="toVisObj[4]">Species List</router-link>
             </h3>
             <p>Browse by Species Name</p>
           </section>
           <section>
             <div class="icon alt major fa-tree"></div>
             <h3>
-              <a href="../MTTree/">Phylogenetic Tree</a>
+              <a href="http://bio.njfu.edu.cn/MTTree/service/index.php">Phylogenetic Tree</a>
             </h3>
             <p>
-              <a href="../CPTree/">CPTree</a> or
-              <a href="../MTTree/">MTTree</a>
+              <a href="http://bio.njfu.edu.cn/CPTree/service/index.php">CPTree</a> or
+              <a href="http://bio.njfu.edu.cn/MTTree/service/index.php">MTTree</a>
             </p>
           </section>
           <section>
@@ -179,7 +179,13 @@ export default {
           params: {
             type: "bs-3d"
           }
-        }
+        },
+        {
+          name: "visualization",
+          params: {
+            type: "sl"
+          }
+        },
       ]
     };
   },

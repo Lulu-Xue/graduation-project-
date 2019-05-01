@@ -1,16 +1,11 @@
 import Vue from "vue"
 import { getNCBIValues, randomList, switchColumn, colorRange, backColor, lineColor, textColor, disableColor } from "./ncbi.js"
 
-export function initPage(myChart, popNotification) {
-    Vue.axios.get("/genomes_organelles.txt").then((res) => {
+export async function initPage(myChart, oldNcList) {
+    let ncList = oldNcList;
+    await Vue.axios.get("/genomes_organelles.txt").then((res) => {
         let NCBIData = res.data.split("\n");
-        let ncNode = document.querySelector("#ncNumbers");
-        let ncList = null;
-        if (ncNode.value === "no nc") {
-            ncList = randomList(NCBIData, 500);
-            ncNode.value = ncList.join(",");
-            popNotification("There is no input data and 500 random genome data have been applied.")
-        }
+        if (!oldNcList) ncList = randomList(NCBIData, 500);
         let data = readDataToMatrix(NCBIData, ncList);
 
         switchColumn(data.cpData, 7, 0); // GC
@@ -417,22 +412,23 @@ export function initPage(myChart, popNotification) {
         myChart.on('click', function (params) {
             if (params.componentType === 'series') {
                 if (params.seriesType === 'scatter') {
-                    let type;
-                    switch (params.data[3]) {
-                        case "mitochondrion":
-                            type = "mtDNA"; break;
-                        case "plastid":
-                            type = "plDNA"; break;
-                        case "chloroplast":
-                            type = "cpDNA"; break;
-                    }
+                    // let type;
+                    // switch (params.data[3]) {
+                    //     case "mitochondrion":
+                    //         type = "mtDNA"; break;
+                    //     case "plastid":
+                    //         type = "plDNA"; break;
+                    //     case "chloroplast":
+                    //         type = "cpDNA"; break;
+                    // }
                     if (params.data[4] != '-') {
-                        window.open("dataview.php?type=" + type + "&id=" + params.data[4]);
+                        window.open("http://bio.njfu.edu.cn/CPTree/service/cpdata.php?type=vdog&id=" + params.data[4]);
                     }
                 }
             }
         });
     });
+    if (!oldNcList) return ncList.join(",");
 }
 
 function readDataToMatrix(NCBIData, ncNumbers) {
@@ -446,20 +442,18 @@ function readDataToMatrix(NCBIData, ncNumbers) {
     re["maxGene"] = 0;
     re["minPro"] = 65535;
     re["maxPro"] = 0;
-    
+
     let res = getNCBIValues(NCBIData, ncNumbers);
     for (let i = 0; i < res.length; i++) {
         let line = res[i];
         switch (line[3]) {
-            case 'plastid':
+            case 'Plastid DNA':
                 re["plData"].push(line); break;
-            case 'mitochondrion':
+            case 'mtDNA':
                 re["mtData"].push(line); break;
-            case 'chloroplast':
+            case 'cpDNA':
                 re["cpData"].push(line); break;
         }
-
-        if (line[8] == '-' || line[12] == "-") continue;
 
         if (parseInt(line[8]) > re["maxPro"]) re["maxPro"] = line[8];
         if (parseInt(line[12]) > re["maxGene"]) re["maxGene"] = line[12];

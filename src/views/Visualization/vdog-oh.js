@@ -4,9 +4,9 @@ import { getNCBIValues, randomList, switchColumn, colorRange, backColor, lineCol
 // x subgroup size
 // y sum of gene
 // radius average genome size
-export function initPage(myChart, popNotification) {
+export async function initPage(myChart, popNotification) {
 	// ./genomes_organelles.txt
-	Vue.axios.get('/history.txt').then((res) => {
+	await Vue.axios.get('/history.txt').then((res) => {
 		// let NCBIData = res.data;
 		// var data = new Object();
 		// data.SubGroup = removeDuplicated( getColumnByName(NCBIData, "SubGroup", "all" ).sort().slice(0,-1) );// remove last: "SubGroup"
@@ -207,7 +207,6 @@ export function initPage(myChart, popNotification) {
 		}
 
 		myChart.setOption(option);
-		console.log(myChart.getOption())
 		myChart.on('click', function (params) {
 			if (params.componentType === 'series') {
 				if (params.seriesType === 'scatter') {
