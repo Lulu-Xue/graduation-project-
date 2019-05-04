@@ -1,7 +1,6 @@
 /* NCBI file reader */
 
-export let availableList = ["Size (Kb)", "GC%", "Protein", "rRNA", "tRNA", "Other RNA", "Gene", "Pseudogene"],
-	colorRange = ["#dd4444", "#fec42c", "#80F1BE"],
+export let colorRange = ["#dd4444", "#fec42c", "#80F1BE"],
 	backColor = "rgba(28, 29, 38, 1)",
 	lineColor = "#666",
 	textColor = "#999",
@@ -45,8 +44,8 @@ export function getColumn(NCBIData, columnNumber, type) {
 	let lines = NCBIData;
 	let re = [];
 	for (let i = 1; i < lines.length - 1; i++) { // length-1: the last line is empty
-		if (lines[i].split("\t")[3] == type || type == 'all') {
-			if (lines[i].split("\t")[columnNumber] == '-') continue; // ignore the '-'
+		if (lines[i].split("\t")[3] === type || type === 'all') {
+			if (lines[i].split("\t")[columnNumber] === '-') continue; // ignore the '-'
 			re.push(lines[i].split("\t")[columnNumber]);
 		}
 	}

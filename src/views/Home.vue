@@ -153,7 +153,6 @@ export default {
   components: {},
   data() {
     return {
-      screenWidth: document.body.clientWidth,
       isTrue: true,
       toVisObj: [
         {
@@ -185,17 +184,18 @@ export default {
           params: {
             type: "sl"
           }
-        },
+        }
       ]
     };
   },
   mounted() {
-    // 监听窗口大小
-    window.addEventListener("resize", () => {
-      this.screenWidth = document.body.clientWidth;
-    });
-    this.$nextTick(function() {
+    this.$nextTick(async function() {
       this.$parent.cancelLoading();
+      await this.$store.dispatch("setNCBIData");
+      sessionStorage.setItem(
+        "NCBIData",
+        JSON.stringify(this.$store.state.NCBIData)
+      );
     });
   },
   beforeDestroy() {
@@ -211,6 +211,9 @@ a {
   color: #e44c65;
   text-decoration: none;
   &:hover {
+    border-color: transparent;
+  }
+  &:focus {
     border-color: transparent;
   }
 }
@@ -334,6 +337,11 @@ a.image {
     border-color: rgba(255, 255, 255, 0.3);
     font-size: pxTorem(15);
     &:hover {
+      border-color: #e44c65;
+      color: #e44c65;
+      background: transparent;
+    }
+    &:focus {
       border-color: #e44c65;
       color: #e44c65;
       background: transparent;
@@ -473,7 +481,7 @@ a.image {
         align-items: center;
         & > section {
           align-items: center;
-          width: 300px;
+          width: 33%;
           & > div {
             height: 96px;
             width: 96px;
@@ -514,6 +522,11 @@ a.image {
       width: 100%;
       border-width: 0;
       border-top-width: pxTorem(5);
+    }
+    #vis > .content > .box {
+      & > section {
+        width: 300px;
+      }
     }
   }
   .content {

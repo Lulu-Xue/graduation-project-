@@ -4,6 +4,7 @@
       <router-view
         v-loading.fullscreen.lock="loading"
         element-loading-background="rgba(23, 24, 32, 0.8)"
+        :toSingleGene="toSingleGene"
       />
     </transition>
     <Header/>
@@ -25,6 +26,12 @@ export default {
     };
   },
   methods: {
+    toSingleGene(input) {
+      location.href =
+        "http://bio.njfu.edu.cn/CPTree/service/cpdata.php?id=" +
+        input +
+        "&type=vdog";
+    },
     openLoading() {
       this.loading = true;
     },
@@ -59,8 +66,7 @@ body {
 /* .slide-fade-leave-active for below version 2.1.8 */ {
   opacity: 0;
 }
-img{
+img {
   object-fit: cover;
-  
 }
 </style>

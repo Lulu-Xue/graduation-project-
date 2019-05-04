@@ -20,8 +20,8 @@
             autofocus
           ></el-input>
           <div class="buttons">
-            <el-button class="special">GO</el-button>
-            <router-link to="entry.php?Type=plast" tag="el-button">View List</router-link>
+            <el-button class="special" @click="toSingleGene(input===''?'NC_006915.1':input)">GO</el-button>
+            <router-link :to="toSlObj" tag="el-button">View List</router-link>
           </div>
         </section>
         <hr>
@@ -35,7 +35,7 @@
           <h3>Examples</h3>
           <p>
             All the mtDNAs have their own web page, you can visit the
-            <router-link to="/intro">Introduction</router-link>page to know the organization of the information. Here are some examples:
+            <router-link to="/intro">Introduction</router-link>&nbsp;page to know the organization of the information. Here are some examples:
           </p>
           <ul>
             <li>
@@ -99,7 +99,15 @@ export default {
   name: "mitoDB",
   data() {
     return {
-      input: ""
+      input: "",
+      toSlObj: {
+        name: "visualization",
+        params: {
+          type: "sl",
+          dataKey: "Type",
+          dataValue: "mitochondrion"
+        }
+      }
     };
   },
   mounted() {

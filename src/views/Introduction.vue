@@ -11,10 +11,10 @@
       <h3>About Organelle Genome</h3>
       <p>
         Compared with nuclear genome, organelles have their own independent genome that encodes a range of genes directly related to producing energy for the cell. Mitochondria and non-photosynthetic plastids are the membrane-bound organelles that convert energy from foodstuffs into cellular energy, while chloroplasts are those use sunlight. Some plastids may also be used for starch storage and the synthesis of fatty acids and terpenes. The
-        <router-link to="/vis/oh">history of organelle genome research</router-link>can be trace back to
-        <router-link to="entry.php?Release%20Date=1986">1986</router-link>while the first organlle genome was published.
+        <router-link to="/vis/oh">history of organelle genome research</router-link>&nbsp;can be trace back to
+        <router-link :to="toSlObj">1986</router-link>&nbsp;while the first organlle genome was published.
         <br>Research shows that organelles likely evolved from bacteria that were endocytosed by nucleated ancestral cells. From the full
-        <router-link to="entry.php">Species List</router-link>, it is clear that metazoan, plant, fungal and other mitochondrial and plastid genomes tend to vary greatly in size and gene content with some of the genes required for the energy creating processes being made by the nuclear genome and imported. Researches also shows that many organisms use one genetic code to translate nuclear mRNAs, and a second one for their mitochondrial and plastid mRNAs.
+        <router-link to="/vis/sl">Species List</router-link>, it is clear that metazoan, plant, fungal and other mitochondrial and plastid genomes tend to vary greatly in size and gene content with some of the genes required for the energy creating processes being made by the nuclear genome and imported. Researches also shows that many organisms use one genetic code to translate nuclear mRNAs, and a second one for their mitochondrial and plastid mRNAs.
       </p>
 
       <h3>Database and its Visualization</h3>
@@ -112,6 +112,18 @@
 <script>
 export default {
   name: "introduction",
+  data() {
+    return {
+      toSlObj: {
+        name: "visualization",
+        params: {
+          type: "sl",
+          dataKey: "Release Date",
+          dataValue: "1986"
+        }
+      }
+    };
+  },
   mounted() {
     this.$nextTick(function() {
       this.$parent.cancelLoading();

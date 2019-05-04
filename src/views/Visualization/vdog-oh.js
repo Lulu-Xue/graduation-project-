@@ -1,10 +1,10 @@
 import Vue from "vue"
-import { getNCBIValues, randomList, switchColumn, colorRange, backColor, lineColor, textColor, disableColor } from "./ncbi.js"
+import {backColor, lineColor, textColor} from "./ncbi.js"
 
 // x subgroup size
 // y sum of gene
 // radius average genome size
-export async function initPage(myChart, popNotification) {
+export async function initPage(NCBIData, myChart, oldNcList, NCBIValues, router) {
 	// ./genomes_organelles.txt
 	await Vue.axios.get('/history.txt').then((res) => {
 		// let NCBIData = res.data;
@@ -210,7 +210,14 @@ export async function initPage(myChart, popNotification) {
 		myChart.on('click', function (params) {
 			if (params.componentType === 'series') {
 				if (params.seriesType === 'scatter') {
-					window.open("entry.php?SubGroup=" + params.data[3].split(",")[0]);
+					router.push({
+						name: "visualization",
+						params: {
+							type: "sl",
+							dataKey: "SubGroup",
+							dataValue: params.data[3].split(",")[0]
+						}
+					});
 				}
 			}
 		});

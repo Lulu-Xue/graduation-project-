@@ -5,7 +5,9 @@
       <p>{{subtitle}}</p>
     </div>
     <section class="chart">
-      <div id="gogogo"></div>
+      <div ref="chart" id="gogogo" v-if="refreshChart">
+        <species-list v-if="type === 'sl'" ref="sl" :dataKey="dataKey" :dataValue="dataValue"/>
+      </div>
       <div v-if="type === 'sl'" class="small-buttons">
         <el-button @click="randomInList('chloroplast', 100);">Select 100 random cpDNA</el-button>
         <el-button @click="randomInList('mitochondrion', 200);">Select 200 random mtDNA</el-button>
@@ -15,7 +17,7 @@
     <section class="selection" v-if="type!='oh'">
       <h3>
         Data Selected: &nbsp;
-        <router-link class="icon alt fa-undo" to="entry.php" tag="span"></router-link>
+        <span class="icon alt fa-undo" @click="clearNc"></span>
       </h3>
       <div>
         <el-input
@@ -38,6 +40,8 @@
 </template>
 <script>
 import echarts from "echarts";
+import { getNCBIValues } from "./ncbi.js";
+import speciesList from "./vdog-sl.vue";
 export default {
   name: "visualization",
   props: {
@@ -48,17 +52,30 @@ export default {
     ncNumbers: {
       type: String,
       default: "no nc"
+    },
+    NCBIValues: {
+      type: Array
+    },
+    dataKey: {
+      type: String
+    },
+    dataValue: {
+      type: String
     }
   },
+  components: { speciesList },
   data() {
     return {
+      refreshChart: true,
       title: "Not ready yet",
       subtitle: "Coming soon....",
       randomNum: 0,
       ncNo: this.ncNumbers,
-      myChart: null
+      myChart: null,
+      NCBIData: JSON.parse(sessionStorage.getItem("NCBIData"))
     };
   },
+  computed: {},
   created() {
     this.initType();
   },
@@ -71,18 +88,38 @@ export default {
   watch: {
     $route(to, from) {
       // 对路由变化作出响应...
-      this.myChart.dispose();
-      if (to.name === "visualization") {
+      if (this.myChart) {
+        this.myChart.dispose();
+        this.myChart = null;
+      }
+      if (to.name === from.name) {
         this.$parent.openLoading();
         this.initType();
-        this.chooseChart();
+        if (to.params.type != "sl") this.chooseChart();
+        else {
+          if (!this.$store.state.NCBIData) this.$store.dispatch("setNCBIData");
+          this.refreshChart = false;
+        }
         this.$nextTick(function() {
+          this.refreshChart = true;
           this.$parent.cancelLoading();
         });
       }
     }
   },
   methods: {
+    clearNc() {
+      if (this.type != "sl") this.$router.go(0);
+      else {
+        this.ncNo = "";
+        this.$nextTick(function() {
+          this.$refs.sl.clearTableMethod();
+        });
+      }
+    },
+    changeNcNo(nc) {
+      this.ncNo = nc;
+    },
     initType() {
       switch (this.type) {
         case "rs":
@@ -110,6 +147,7 @@ export default {
           this.subtitle = "Browse by Species Name";
           this.randomNum = 0;
           this.ncNo = "";
+          break;
         default:
           break;
       }
@@ -138,22 +176,25 @@ export default {
           name: "visualization",
           params: {
             type: type,
-            ncNumbers: value
+            ncNumbers: value,
+            NCBIValues: getNCBIValues(this.NCBIData, value)
           }
         });
       }
     },
-    resizeHandler(myChart, chartNode) {
-      if (this.type === "oh") {
-        myChart.setOption({
-          title: {
-            textStyle: {
-              fontSize: chartNode.clientWidth / 13
+    resizeHandler() {
+      if (this.myChart && this.$refs.chart) {
+        if (this.type === "oh") {
+          this.myChart.setOption({
+            title: {
+              textStyle: {
+                fontSize: this.$refs.chart.clientWidth / 13
+              }
             }
-          }
-        });
+          });
+        }
+        this.myChart.resize();
       }
-      myChart.resize();
     },
     chooseChart() {
       if (this.type != "bs-3d") {
@@ -164,8 +205,14 @@ export default {
         });
       }
     },
-    initChart() {
-      let chartNode = document.querySelector("#gogogo");
+    async initChart() {
+      if (!this.NCBIData) {
+        if (!this.$store.state.NCBIData)
+          await this.$store.dispatch("setNCBIData");
+        this.NCBIData = this.$store.state.NCBIData;
+        sessionStorage.setItem("NCBIData", JSON.stringify(this.NCBIData));
+      }
+      let chartNode = this.$refs.chart;
       let myChart = echarts.init(chartNode);
       myChart.showLoading("default", {
         text: "Loading",
@@ -185,21 +232,45 @@ export default {
         } else {
           ncList = this.ncNo.split(",");
         }
-        initPage(myChart, ncList).then(res => {
+        initPage(
+          this.NCBIData,
+          myChart,
+          ncList,
+          this.NCBIValues,
+          this.$router
+        ).then(res => {
           if (res) this.ncNo = res;
         });
         myChart.on("rendered", function() {
           myChart.hideLoading();
         });
       });
-      window.addEventListener(
-        "resize",
-        this.resizeHandler.bind(this, myChart, chartNode)
-      );
       this.myChart = myChart;
+      window.addEventListener("resize", this.resizeHandler);
+    },
+    randomInList(type, listSize) {
+      let lines = this.$store.state.NCBIData;
+      let re = [];
+      for (let i = 1; i < lines.length - 1; i++) {
+        // length-1: the last line is empty
+        let line = lines[i].split("\t");
+        if (line[4] != "-" && (type === "all" || line[3] === type)) {
+          re.push(line);
+        }
+      }
+      re.sort(function() {
+        return 0.5 - Math.random();
+      });
+      let res = re.slice(0, listSize);
+      this.ncNo = res
+        .map(function(item) {
+          return item[4];
+        })
+        .join(",");
     }
   },
   beforeDestroy() {
+    window.removeEventListener("resize", this.resizeHandler);
     this.$parent.openLoading();
   }
 };
@@ -214,6 +285,7 @@ export default {
   }
   &:hover {
     color: #e44c65;
+    cursor: pointer;
   }
 }
 .content {

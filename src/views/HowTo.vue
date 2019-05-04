@@ -34,8 +34,8 @@
         <a
           href="https://www.ncbi.nlm.nih.gov/books/NBK25501/"
         >Enterz utilities</a> to retrieve data from NCBI databases. VDOG applies these accession numbers as the keywords of the genome information as well. For example, in the
-        <router-link to="entry.php">Species List</router-link>page, users can open the
-        <router-link to="#viewer" class="scrolly">Genome Info Viewer</router-link>by clicking the NC Number in the table.
+        <router-link to="/vis/sl">Species List</router-link>&nbsp;page, users can open the
+        <router-link to="#viewer" class="scrolly">Genome Info Viewer</router-link>&nbsp;by clicking the NC Number in the table.
       </p>
     </section>
 
@@ -52,8 +52,8 @@
       </p>
       <p>
         The
-        <router-link to="/plastid">plastidDB page</router-link>has a search area, where user can input the NC Number of the plastid genome and jump to the
-        <router-link to="#viewer" class="scrolly">Genome Info Viewer</router-link>page to see the detailed information. Also, a full list of plastid genome is available.
+        <router-link to="/plastid">plastidDB page</router-link>&nbsp;has a search area, where user can input the NC Number of the plastid genome and jump to the
+        <router-link to="#viewer" class="scrolly">Genome Info Viewer</router-link>&nbsp;page to see the detailed information. Also, a full list of plastid genome is available.
       </p>
     </section>
 
@@ -69,14 +69,14 @@
       </p>
       <p>
         The
-        <router-link to="/mito">mitoDB page</router-link>has a similar search area with plastidDB, where user can also use the NC Number of the mtDNA to access the
-        <router-link to="#viewer" class="scrolly">Genome Info Viewer</router-link>page and check the detailed information. A full list of mitochondrial genome is available as well.
+        <router-link to="/mito">mitoDB page</router-link>&nbsp;has a similar search area with plastidDB, where user can also use the NC Number of the mtDNA to access the
+        <router-link to="#viewer" class="scrolly">Genome Info Viewer</router-link>&nbsp;page and check the detailed information. A full list of mitochondrial genome is available as well.
       </p>
     </section>
 
     <section id="entry">
       <h3>
-        <router-link to="entry.php">Database Entry</router-link>
+        <router-link to="/vis/sl">Database Entry</router-link>
       </h3>
       <p>In order to follow the tradition, we keep the main entrance of VDOG as a typical table, in which lists the Organism Name, Group, SubGroup, Type, NCBI accession number. Also, in the table the numeric features of the genomes are also available, such as genome size, GC contain, the number of Protein, rRNA, tRNA, Other RNA, and the number of Gene and Pseudogene. All these information can be filtered and sorted with online utilities.</p>
       <p>
@@ -96,7 +96,17 @@
         </li>
       </ol>
       <h4>Custom Filter Examples</h4>
-      <el-table :data="tableData" style="width: 100%">
+      <el-table
+        v-if="tableData"
+        :data="tableData"
+        size="medium"
+        lazy
+        tooltip-effect="dark"
+        row-class-name="table-row"
+        cell-class-name="table-cell"
+        header-row-class-name="table-head-row"
+        header-cell-class-name="table-head-cell"
+      >
         <el-table-column label="Filter Type" min-width="20">
           <template slot-scope="scope">
             <span v-html="scope.row.type"></span>
@@ -205,9 +215,7 @@
       </p>
       <p>
         Sample Visualization:
-        <router-link
-          to="/vis/sc"
-        >Scattered Comparison of 200 Random Organelle Genome Data</router-link>
+        <router-link to="/vis/sc">Scattered Comparison of 200 Random Organelle Genome Data</router-link>
       </p>
 
       <p>
@@ -355,34 +363,34 @@ code {
     list-style: decimal;
     margin-left: 1em;
   }
-  .el-table {
-    color: rgba(255, 255, 255, 0.75);
-    th {
-      color: #fff;
-    }
-    &::before {
-      display: none;
-    }
-  }
-  .el-table td,
-  .el-table th.is-leaf {
-    border-color: rgba(255, 255, 255, 0.3);
-  }
-  .el-table th,
-  .el-table tr {
-    background: transparent;
-  }
-  .el-table,
-  .el-table__expanded-cell {
-    background: transparent;
-  }
-  .el-table__body tr {
-    &:nth-of-type(2n + 1) {
-      background: rgba(255, 255, 255, 0.1);
-    }
-  }
-  .el-table__body tr:hover > td {
-    background-color: transparent;
-  }
+  // .el-table {
+  //   color: rgba(255, 255, 255, 0.75);
+  //   th {
+  //     color: #fff;
+  //   }
+  //   &::before {
+  //     display: none;
+  //   }
+  // }
+  // .el-table td,
+  // .el-table th.is-leaf {
+  //   border-color: rgba(255, 255, 255, 0.3);
+  // }
+  // .el-table th,
+  // .el-table tr {
+  //   background: rgba(23, 24, 32, 0.95);
+  // }
+  // .el-table,
+  // .el-table__expanded-cell {
+  //   background: rgba(23, 24, 32, 0.95);
+  // }
+  // .el-table__body tr {
+  //   &:nth-of-type(2n + 1) {
+  //     background: #4B4B4B;
+  //   }
+  // }
+  // .el-table__body tr:hover > td {
+  //   background-color: rgba(23, 24, 32, 0.95);
+  // }
 }
 </style>
