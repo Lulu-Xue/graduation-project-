@@ -1,8 +1,7 @@
 import Vue from "vue";
-import { getNCType, getNCBIValues, randomList, switchColumn, colorRange, backColor, lineColor, textColor, disableColor } from "./ncbi.js"
+import { getNCBIValues, randomList, switchColumn, colorRange, backColor, lineColor, textColor, disableColor } from "./ncbi.js"
 
 export async function initPage(NCBIData, myChart, oldNcList, NCBIValues) {
-    console.log(NCBIData)
     let ncList = oldNcList;
     if (!oldNcList) ncList = randomList(NCBIData, 20);
     let schema = [
@@ -183,7 +182,7 @@ function data2Dto3D(data2D) {
     var re = new Array();
     for (var i = 0; i < data2D.length; i++) {
         for (var j = 0; j < data2D[i].length; j++) {
-            re.push({ value: [i, j, data2D[i][j]] });
+            re.push([i, j, data2D[i][j]]);
         }
     }
     return re;

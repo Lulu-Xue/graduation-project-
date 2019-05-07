@@ -14,7 +14,7 @@
         <el-button @click="randomInList('all', 500);">Select 500 random Genome</el-button>
       </div>
     </section>
-    <section class="selection" v-if="type!='oh'">
+    <section class="selection" v-if="randomNum != -1">
       <h3>
         Data Selected: &nbsp;
         <span class="icon alt fa-undo" @click="clearNc"></span>
@@ -42,6 +42,7 @@
 import echarts from "echarts";
 import { getNCBIValues } from "./ncbi.js";
 import speciesList from "./vdog-sl.vue";
+import FileSaver from "file-saver";
 export default {
   name: "visualization",
   props: {
@@ -69,7 +70,7 @@ export default {
       refreshChart: true,
       title: "Not ready yet",
       subtitle: "Coming soon....",
-      randomNum: 0,
+      randomNum: -1,
       ncNo: this.ncNumbers,
       myChart: null,
       NCBIData: JSON.parse(sessionStorage.getItem("NCBIData"))
@@ -148,6 +149,12 @@ export default {
           this.randomNum = 0;
           this.ncNo = "";
           break;
+        case "ss-3d":
+          this.title = "Scatter List";
+          this.subtitle = "Feature Data in 3D";
+          this.randomNum = -1;
+          this.ncNo = "";
+          break;
         default:
           break;
       }
@@ -157,10 +164,8 @@ export default {
       if (value === "no nc" || value === "") {
         this.$parent.popNotification("Nothing to download.");
       } else {
-        let saveData = new Array();
-        saveData[0] = value;
-        let blob = new Blob(saveData, { type: "text/plain;charset=utf-8" });
-        saveAs(blob, "nc_numbers.txt");
+        let blob = new Blob([value], { type: "text/plain;charset=utf-8" });
+        FileSaver.saveAs(blob, "nc_numbers.txt");
       }
     },
     sendListToVis(type) {
@@ -197,7 +202,7 @@ export default {
       }
     },
     chooseChart() {
-      if (this.type != "bs-3d") {
+      if (this.type.indexOf("3d") < 0) {
         this.initChart();
       } else {
         import("echarts-gl").then(() => {
@@ -223,14 +228,14 @@ export default {
       });
       import("./vdog-" + this.type + ".js").then(({ initPage }) => {
         let ncList = null;
-        if (this.ncNo === "no nc" && this.type != "oh") {
+        if (this.ncNo === "no nc" && this.randomNum != -1) {
           this.$parent.popNotification(
             "There is no input data and " +
               this.randomNum +
               " random genome data have been applied."
           );
         } else {
-          ncList = this.ncNo.split(",");
+          ncList = this.ncNo ? this.ncNo.split(",") : null;
         }
         initPage(
           this.NCBIData,

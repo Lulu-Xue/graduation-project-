@@ -13,40 +13,53 @@ export function randomList(NCBIData, listSize) {
 }
 
 export function getNCBIValues(NCBIData, NCNumbers) {
-	let lines = NCBIData;
-	let res = [], count = 0, len = NCNumbers.length;
-	for (let i = 1; i < lines.length; i++) {
-		if (lines[i]) {
-			let nc_no = lines[i].split("\t")[4];
-			if (NCNumbers.indexOf(nc_no) >= 0) {
-				let line = lines[i].split("\t");
-				switch (line[3]) {
-					case 'plastid':
-						line[3] = "Plastid DNA"; break;
-					case 'mitochondrion':
-						line[3] = "mtDNA"; break;
-					case 'chloroplast':
-						line[3] = "cpDNA"; break;
+	let lines = NCBIData, res = [];
+	if (NCNumbers) {
+		let count = 0, len = NCNumbers.length;
+		for (let i = 1; i < lines.length; i++) {
+			if (lines[i]) {
+				let nc_no = lines[i].split("\t")[4];
+				if (NCNumbers.indexOf(nc_no) >= 0) {
+					let line = lines[i].split("\t");
+					switch (line[3]) {
+						case 'plastid':
+							line[3] = "Plastid DNA"; break;
+						case 'mitochondrion':
+							line[3] = "mtDNA"; break;
+						case 'chloroplast':
+							line[3] = "cpDNA"; break;
+					}
+					for (let j = 6; j < line.length; j++) {
+						if (line[j] === '-') line[j] = 0;
+					}
+					res.push(line);
+					count++;
 				}
+				if (count === len) break;
+			}
+		}
+	} else {
+		for (let i = 1; i < lines.length; i++) {
+			if (lines[i]) {
+				let line = lines[i].split("\t");
 				for (let j = 6; j < line.length; j++) {
 					if (line[j] === '-') line[j] = 0;
 				}
-				res.push(line);
-				count++;
+				if (line[12] < 900) res.push(line);//for beautiful scaater3D
 			}
-			if (count === len) break;
 		}
 	}
 	return res;
 }
 
-export function getColumn(NCBIData, columnNumber, type) {
+export function getColumn(NCBIData, columnNumber, type, group) {
 	let lines = NCBIData;
 	let re = [];
 	for (let i = 1; i < lines.length - 1; i++) { // length-1: the last line is empty
-		if (lines[i].split("\t")[3] === type || type === 'all') {
-			if (lines[i].split("\t")[columnNumber] === '-') continue; // ignore the '-'
-			re.push(lines[i].split("\t")[columnNumber]);
+		let line = lines[i].split("\t");
+		if ((!type || line[3] === type || type === 'all') && (!group || line[1] === group)) {
+			if (line[columnNumber] === '-') continue; // ignore the '-'
+			if (re.indexOf(line[columnNumber]) < 0) re.push(line[columnNumber]);
 		}
 	}
 	return re;
@@ -61,16 +74,16 @@ export function switchColumn(matrix, source, target) {
 	}
 }
 
-export function getNCType(NCBIData, NCNumber) {
-	// ../CPTree/service/cpdata.php?id=NC_000932.1&type=vdog
-	var values = getNCBIValues(NCBIData, NCNumber);
-	switch (values[3]) {
-		case "mitochondrion":
-			return "mtDNA";
-		case "chloroplast":
-			return "cpDNA";
-		case "plastid":
-			return "cpDNA";
-	}
-	return null;
-}
+// export function getNCType(NCBIData, NCNumber) {
+// 	// ../CPTree/service/cpdata.php?id=NC_000932.1&type=vdog
+// 	var values = getNCBIValues(NCBIData, NCNumber);
+// 	switch (values[3]) {
+// 		case "mitochondrion":
+// 			return "mtDNA";
+// 		case "chloroplast":
+// 			return "cpDNA";
+// 		case "plastid":
+// 			return "cpDNA";
+// 	}
+// 	return null;
+// }

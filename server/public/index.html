@@ -1,0 +1,18 @@
+<!DOCTYPE html><html lang=en><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1"><link rel=icon href=/gene.ico><title>VDOG: Visual Database for Organelle Genome</title><script>function rem() {
+      let htmlElem = document.documentElement;
+      let width = Math.min(htmlElem.getBoundingClientRect().width, 1920);
+      let fontSize = width * 100 / 1920 + 'px';
+      htmlElem.style.fontSize = fontSize;
+    }
+    void function () {
+      rem();
+      // window.addEventListener('resize', rem);
+    }();
+    function resizeHandler() {
+      this.rem();
+    }
+    window.addEventListener('resize', resizeHandler);
+    window.addEventListener('beforeunload', function () {
+      sessionStorage.setItem("title", document.title);
+    });
+    if (sessionStorage.getItem("title")) document.title = sessionStorage.getItem("title");</script><link href=/js/chunk-183bc724.7d7d9091.js rel=prefetch><link href=/js/chunk-2d0c54ca.6bd9efb9.js rel=prefetch><link href=/js/chunk-2d0c573e.beb8f41d.js rel=prefetch><link href=/js/chunk-2d0d3153.c668b0fc.js rel=prefetch><link href=/js/chunk-2d0e1dbe.c32fa8f3.js rel=prefetch><link href=/js/chunk-2d0e2112.eb8e82d1.js rel=prefetch><link href=/js/chunk-2d229257.8e769860.js rel=prefetch><link href=/css/app.0ad884a0.css rel=preload as=style><link href=/css/chunk-vendors.e8c2204c.css rel=preload as=style><link href=/js/app.7e78389d.js rel=preload as=script><link href=/js/chunk-vendors.3e8748dd.js rel=preload as=script><link href=/css/chunk-vendors.e8c2204c.css rel=stylesheet><link href=/css/app.0ad884a0.css rel=stylesheet></head><body><noscript><strong>We're sorry but graduation-project- doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id=app></div><script src=/js/chunk-vendors.3e8748dd.js></script><script src=/js/app.7e78389d.js></script></body></html>

@@ -138,6 +138,13 @@
             </h3>
             <p>Feature Data in 3D</p>
           </section>
+          <section>
+            <div class="icon alt major fa-cube"></div>
+            <h3>
+              <router-link :to="toVisObj[5]">Scatter Space</router-link>
+            </h3>
+            <p>Feature Data in 3D</p>
+          </section>
         </div>
       </div>
     </section>
@@ -183,6 +190,12 @@ export default {
           name: "visualization",
           params: {
             type: "sl"
+          }
+        },
+        {
+          name: "visualization",
+          params: {
+            type: "ss-3d"
           }
         }
       ]
@@ -459,7 +472,7 @@ a.image {
         width: 33%;
       }
       & > p {
-        width: 30%;
+        width: 33%;
         font-size: pxTorem(14);
         line-height: 2em;
         color: rgba(255, 255, 255, 0.75);
@@ -477,7 +490,7 @@ a.image {
       & > .box {
         display: flex;
         flex-flow: row wrap;
-        justify-content: space-evenly;
+        justify-content: flex-start;
         align-items: center;
         & > section {
           align-items: center;
@@ -525,7 +538,7 @@ a.image {
     }
     #vis > .content > .box {
       & > section {
-        width: 300px;
+        width: 100%;
       }
     }
   }
