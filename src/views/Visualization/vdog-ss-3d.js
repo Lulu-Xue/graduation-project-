@@ -22,7 +22,6 @@ export async function initPage(NCBIData, myChart, oldNcList, NCBIValues) {
     ];
 
     let ncData = readDataToMatrix(NCBIData, ncList, NCBIValues);
-    let xData = ncList;
 
     let option = {
         tooltip: {
@@ -280,7 +279,7 @@ export async function initPage(NCBIData, myChart, oldNcList, NCBIValues) {
     });
     myChart.on('click', function (params) {
         if (params.componentType === 'series') {
-            if (params.seriesType === 'bar3D') {
+            if (params.seriesType === 'scatter3D') {
                 window.open("http://bio.njfu.edu.cn/CPTree/service/cpdata.php?type=vdog&id=" + params.data.value[6]);
             }
         }
