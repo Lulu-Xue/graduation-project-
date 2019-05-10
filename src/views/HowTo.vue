@@ -363,34 +363,5 @@ code {
     list-style: decimal;
     margin-left: 1em;
   }
-  // .el-table {
-  //   color: rgba(255, 255, 255, 0.75);
-  //   th {
-  //     color: #fff;
-  //   }
-  //   &::before {
-  //     display: none;
-  //   }
-  // }
-  // .el-table td,
-  // .el-table th.is-leaf {
-  //   border-color: rgba(255, 255, 255, 0.3);
-  // }
-  // .el-table th,
-  // .el-table tr {
-  //   background: rgba(23, 24, 32, 0.95);
-  // }
-  // .el-table,
-  // .el-table__expanded-cell {
-  //   background: rgba(23, 24, 32, 0.95);
-  // }
-  // .el-table__body tr {
-  //   &:nth-of-type(2n + 1) {
-  //     background: #4B4B4B;
-  //   }
-  // }
-  // .el-table__body tr:hover > td {
-  //   background-color: rgba(23, 24, 32, 0.95);
-  // }
 }
 </style>

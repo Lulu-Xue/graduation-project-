@@ -13,11 +13,18 @@ Vue.config.productionTip = false
 Vue.use(ElementUI, { locale });//后期减少数量，menu,button,table,loading
 Vue.use(VueAxios, axios);
 
-new Vue({
+const root = new Vue({
   router,
   store,
-  render: h => h(App)
-}).$mount('#app')
+  render: h => h(App),
+  mounted() {
+    document.dispatchEvent(new Event('custom-render-trigger'))
+  }
+})
+
+document.addEventListener('DOMContentLoaded', function () {
+  root.$mount('#app');
+})
 
 //修改每个页面的title
 router.beforeEach((to, from, next) => {

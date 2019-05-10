@@ -1,34 +1,35 @@
-import Vue from "vue";
 import { getNCBIValues, randomList, switchColumn, colorRange, backColor, lineColor, textColor, disableColor } from "./ncbi.js"
 
 export async function initPage(NCBIData, myChart, oldNcList, NCBIValues) {
     let ncList = oldNcList;
     if (!oldNcList) ncList = randomList(NCBIData, 20);
-    let schema = [
-        { name: 'name', index: 0, value: 'Organism/Name' },
-        { name: 'Group', index: 1, value: 'Group' },
-        { name: 'SubGroup', index: 2, value: 'SubGroup' },
-        { name: 'Type', index: 3, value: 'Type' },
-        { name: 'RefSeq', index: 4, value: 'RefSeq' },
-        { name: 'INSDC', index: 5, value: 'INSDC' },
-        { name: 'Size', index: 6, value: 'Size (Kb)' },
-        { name: 'GC', index: 7, value: 'GC%' },
-        { name: 'Protein', index: 8, value: 'Protein' },
-        { name: 'rRNA', index: 9, value: 'rRNA' },
-        { name: 'tRNA', index: 10, value: 'tRNA' },
-        { name: 'oRNA', index: 11, value: 'Other RNA' },
-        { name: 'Gene', index: 12, value: 'Gene' },
-        { name: 'Pseudogene', index: 13, value: 'Pseudogene' },
-        { name: 'RDate', index: 14, value: 'Release Date' },
-        { name: 'MDate', index: 15, value: 'Modify Date' }
-    ];
-    let header = ['Other RNA', 'rRNA', 'tRNA', 'Protein', 'Gene', 'Pseudogene'];
+    // let schema = [
+    //     { name: 'name', index: 0, value: 'Organism/Name' },
+    //     { name: 'Group', index: 1, value: 'Group' },
+    //     { name: 'SubGroup', index: 2, value: 'SubGroup' },
+    //     { name: 'Type', index: 3, value: 'Type' },
+    //     { name: 'RefSeq', index: 4, value: 'RefSeq' },
+    //     { name: 'INSDC', index: 5, value: 'INSDC' },
+    //     { name: 'Size', index: 6, value: 'Size (Kb)' },
+    //     { name: 'GC', index: 7, value: 'GC%' },
+    //     { name: 'Protein', index: 8, value: 'Protein' },
+    //     { name: 'rRNA', index: 9, value: 'rRNA' },
+    //     { name: 'tRNA', index: 10, value: 'tRNA' },
+    //     { name: 'oRNA', index: 11, value: 'Other RNA' },
+    //     { name: 'Gene', index: 12, value: 'Gene' },
+    //     { name: 'Pseudogene', index: 13, value: 'Pseudogene' },
+    //     { name: 'RDate', index: 14, value: 'Release Date' },
+    //     { name: 'MDate', index: 15, value: 'Modify Date' }
+    // ];
+    let header = NCBIData[0].slice(8, 14);
+    [header[0], header[3]] = [header[3], header[0]];
     let xData = ncList;
 
     let ncData = readDataToMatrix(NCBIData, ncList, NCBIValues);
     switchColumn(ncData.data, 0, 3);
 
     let option = {
+        backgroundColor: backColor,
         tooltip: {
             formatter: function (obj) {
                 let value = obj.value;
@@ -54,7 +55,7 @@ export async function initPage(NCBIData, myChart, oldNcList, NCBIValues) {
         visualMap: {
             type: 'continuous',
             min: ncData.min,
-            max: +ncData.max,
+            max: ncData.max,
             inRange: {
                 color: colorRange.reverse()
             },
@@ -197,7 +198,7 @@ function readDataToMatrix(NCBIData, ncNumbers, NCBIValues) {
 
     let res = NCBIValues ? NCBIValues : getNCBIValues(NCBIData, ncNumbers);
     for (let i = 0; i < res.length; i++) {
-        let line = res[i];
+        let line = res[i].slice();
         re["data"].push(line.slice(8, 14));
         for (let j = 0; j <= re["data"][i].length; j++) {
             if (re["data"][i][j] > re["max"]) re["max"] = re["data"][i][j];

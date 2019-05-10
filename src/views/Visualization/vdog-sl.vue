@@ -124,7 +124,7 @@ export default {
       }
       let lines = NCBIData ? NCBIData : this.$store.state.NCBIData;
       if (lines) {
-        let head = lines[0].split("\t");
+        let head = lines[0];
         let res = [];
         let index = 0;
         if (this.dataKey && this.dataValue) {
@@ -132,7 +132,7 @@ export default {
         }
         for (let i = 1; i < lines.length; i++) {
           if (lines[i]) {
-            let line = lines[i].split("\t");
+            let line = lines[i];
             if (
               this.dataKey &&
               this.dataValue &&

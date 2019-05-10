@@ -6,11 +6,8 @@ Vue.use(Vuex)
 async function getData() {
   let NCBIData = null;
   await Vue.axios.get("/api/gene").then((res) => {
-    NCBIData = res.data.split("\n");
+    NCBIData = res.data;
   });
-  // await Vue.axios.get(location.protocol+"//"+location.host+"/genomes_organelles.txt").then((res) => {
-  //   NCBIData = res.data.split("\n");
-  // });
   return NCBIData;
 }
 

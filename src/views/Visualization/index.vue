@@ -90,6 +90,7 @@ export default {
     $route(to, from) {
       // 对路由变化作出响应...
       if (this.myChart) {
+        this.myChart.clear();
         this.myChart.dispose();
         this.myChart = null;
       }
@@ -150,7 +151,7 @@ export default {
           this.ncNo = "";
           break;
         case "ss-3d":
-          this.title = "Scatter List";
+          this.title = "Scatter Space";
           this.subtitle = "Feature Data in 3D";
           this.randomNum = -1;
           this.ncNo = "";
@@ -237,14 +238,16 @@ export default {
         } else {
           ncList = this.ncNo ? this.ncNo.split(",") : null;
         }
-        initPage(
-          this.NCBIData,
-          myChart,
-          ncList,
-          this.NCBIValues,
-          this.$router
-        ).then(res => {
-          if (res) this.ncNo = res;
+        this.$nextTick(function() {
+          initPage(
+            this.NCBIData,
+            myChart,
+            ncList,
+            this.NCBIValues ? this.NCBIValues.slice() : this.NCBIValues,
+            this.$router
+          ).then(res => {
+            if (res) this.ncNo = res;
+          });
         });
         myChart.on("rendered", function() {
           myChart.hideLoading();
@@ -258,7 +261,7 @@ export default {
       let re = [];
       for (let i = 1; i < lines.length - 1; i++) {
         // length-1: the last line is empty
-        let line = lines[i].split("\t");
+        let line = lines[i];
         if (line[4] != "-" && (type === "all" || line[3] === type)) {
           re.push(line);
         }
@@ -275,6 +278,8 @@ export default {
     }
   },
   beforeDestroy() {
+    this.myChart.clear();
+    this.myChart.dispose();
     window.removeEventListener("resize", this.resizeHandler);
     this.$parent.openLoading();
   }

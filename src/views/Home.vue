@@ -356,7 +356,7 @@ a.image {
     }
     &:focus {
       border-color: #e44c65;
-      color: #e44c65;
+      color: #e44c65 !important;
       background: transparent;
     }
   }

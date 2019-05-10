@@ -1,4 +1,3 @@
-import Vue from "vue"
 import { getNCBIValues, randomList, switchColumn, colorRange, backColor, lineColor, textColor, disableColor } from "./ncbi.js"
 
 let CATEGORY_DIM_COUNT = 8; // 平行坐标系坐标轴维度个数
@@ -114,6 +113,7 @@ function generateGrids(option, data, schema) {
 
             option.series.push({
                 type: 'scatter',
+                large: true,
                 symbolSize: SYMBOL_SIZE,
                 xAxisIndex: index,
                 yAxisIndex: index,
@@ -132,10 +132,9 @@ function generateGrids(option, data, schema) {
 export async function initPage(NCBIData, myChart, oldNcList, NCBIValues) {
     let ncList = oldNcList;
     if (!oldNcList) ncList = randomList(NCBIData, 200);
-    let data = NCBIValues ? NCBIValues : readDataToMatrix(NCBIData, ncList);
+    let data = readDataToMatrix(NCBIData, ncList, NCBIValues);
 
     switchColumn(data, 1, 2); // Group
-
     let schema = [
         { name: 'name', index: 0, text: 'Organism/Name' },
         { name: 'SubGroup', index: 1, text: 'SubGroup' },
@@ -156,7 +155,7 @@ export async function initPage(NCBIData, myChart, oldNcList, NCBIValues) {
     ];
 
     let option = {
-        //animation: false,
+        animationThreshold: 100,
         backgroundColor: backColor,
         brush: {
             brushLink: 'all',
@@ -185,6 +184,29 @@ export async function initPage(NCBIData, myChart, oldNcList, NCBIValues) {
         },
         visualMap: [{
             type: 'piecewise',
+            top: 20,
+            left: 0,
+            dimension: 2,
+            categories: ['Animals', 'Fungi', 'Plants', 'Protists', 'Other'],
+            textStyle: {
+                color: textColor
+            },
+            inRange: {
+            },
+            outOfRange: {
+                color: ['rgba(255,255,255,.05)', 'rgba(255,255,255,.05)', 'rgba(255,255,255,.05)', 'rgba(255,255,255,.05)', 'rgba(255,255,255,.05)']
+            },
+            controller: {
+                inRange: {
+                    symbol: "path://M512 976.7424c-256.67072 0-464.7424-208.07168-464.7424-464.73728C47.2576 255.32928 255.32928 47.2576 512 47.2576s464.7424 208.07168 464.7424 464.7424c0 256.67072-208.07168 464.7424-464.7424 464.7424z m225.41312-754.26816c-161.65888 106.2144-264.18176 424.86272-264.18176 424.86272L410.14272 490.54208l-130.11968 101.16096c55.20896 25.28768 134.0672 106.2144 201.09312 212.4288 47.31392-111.26784 193.20832-338.87744 264.18176-359.11168-27.5968-80.9216-11.82208-146.67776-7.8848-222.54592z m0 0",
+                    color: '#ffffff'
+                },
+                outOfRange: {
+                    color: disableColor
+                }
+            }
+        }, {
+            type: 'piecewise',
             categories: ["mtDNA", "Plastid DNA", "cpDNA"],
             dimension: CATEGORY_DIM,
             orient: 'horizontal',
@@ -209,29 +231,6 @@ export async function initPage(NCBIData, myChart, oldNcList, NCBIValues) {
                 }
             },
             //seriesIndex: [0] // all
-        }, {
-            type: 'piecewise',
-            top: 20,
-            left: 0,
-            dimension: 2,
-            categories: ['Animals', 'Fungi', 'Plants', 'Protists', 'Other'],
-            textStyle: {
-                color: textColor
-            },
-            inRange: {
-            },
-            outOfRange: {
-                color: ['rgba(255,255,255,.05)', 'rgba(255,255,255,.05)', 'rgba(255,255,255,.05)', 'rgba(255,255,255,.05)', 'rgba(255,255,255,.05)']
-            },
-            controller: {
-                inRange: {
-                    symbol: "path://M512 976.7424c-256.67072 0-464.7424-208.07168-464.7424-464.73728C47.2576 255.32928 255.32928 47.2576 512 47.2576s464.7424 208.07168 464.7424 464.7424c0 256.67072-208.07168 464.7424-464.7424 464.7424z m225.41312-754.26816c-161.65888 106.2144-264.18176 424.86272-264.18176 424.86272L410.14272 490.54208l-130.11968 101.16096c55.20896 25.28768 134.0672 106.2144 201.09312 212.4288 47.31392-111.26784 193.20832-338.87744 264.18176-359.11168-27.5968-80.9216-11.82208-146.67776-7.8848-222.54592z m0 0",
-                    color: '#ffffff'
-                },
-                outOfRange: {
-                    color: disableColor
-                }
-            }
         }],
         tooltip: {
             trigger: 'item',
@@ -407,7 +406,11 @@ export async function initPage(NCBIData, myChart, oldNcList, NCBIValues) {
     if (!oldNcList) return ncList.join(",");
 }
 
-function readDataToMatrix(NCBIData, ncNumbers) {
-    let res = getNCBIValues(NCBIData, ncNumbers);
-    return res;
+function readDataToMatrix(NCBIData, ncNumbers, NCBIValues) {
+    let re = new Array();
+    let res = NCBIValues ? NCBIValues : getNCBIValues(NCBIData, ncNumbers);
+    for (let i = 0, len = res.length; i < len; i++) {
+        re.push(res[i].slice());//二维数组深拷贝
+    }
+    return re;
 }

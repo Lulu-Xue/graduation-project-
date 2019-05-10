@@ -18,9 +18,9 @@ export function getNCBIValues(NCBIData, NCNumbers) {
 		let count = 0, len = NCNumbers.length;
 		for (let i = 1; i < lines.length; i++) {
 			if (lines[i]) {
-				let nc_no = lines[i].split("\t")[4];
+				let nc_no = lines[i][4];
 				if (NCNumbers.indexOf(nc_no) >= 0) {
-					let line = lines[i].split("\t");
+					let line = lines[i];
 					switch (line[3]) {
 						case 'plastid':
 							line[3] = "Plastid DNA"; break;
@@ -29,9 +29,6 @@ export function getNCBIValues(NCBIData, NCNumbers) {
 						case 'chloroplast':
 							line[3] = "cpDNA"; break;
 					}
-					for (let j = 6; j < line.length; j++) {
-						if (line[j] === '-') line[j] = 0;
-					}
 					res.push(line);
 					count++;
 				}
@@ -39,13 +36,9 @@ export function getNCBIValues(NCBIData, NCNumbers) {
 			}
 		}
 	} else {
-		for (let i = 1; i < lines.length; i++) {
+		for (let i = 1, len = lines.length; i < len; i++) {
 			if (lines[i]) {
-				let line = lines[i].split("\t");
-				for (let j = 6; j < line.length; j++) {
-					if (line[j] === '-') line[j] = 0;
-				}
-				if (line[12] < 900) res.push(line);//for beautiful scaater3D
+				if (lines[i][12] < 900) res.push(lines[i]);//for beautiful scatter3D
 			}
 		}
 	}
@@ -55,11 +48,13 @@ export function getNCBIValues(NCBIData, NCNumbers) {
 export function getColumn(NCBIData, columnNumber, type, group) {
 	let lines = NCBIData;
 	let re = [];
-	for (let i = 1; i < lines.length - 1; i++) { // length-1: the last line is empty
-		let line = lines[i].split("\t");
-		if ((!type || line[3] === type || type === 'all') && (!group || line[1] === group)) {
-			if (line[columnNumber] === '-') continue; // ignore the '-'
-			if (re.indexOf(line[columnNumber]) < 0) re.push(line[columnNumber]);
+	for (let i = 1; i < lines.length; i++) { // length-1: the last line is empty
+		if (lines[i]) {
+			let line = lines[i];
+			if ((!type || line[3] === type || type === 'all') && (!group || line[1] === group)) {
+				if (line[columnNumber] === '-') continue; // ignore the '-'
+				if (re.indexOf(line[columnNumber]) < 0) re.push(line[columnNumber]);
+			}
 		}
 	}
 	return re;
@@ -67,7 +62,7 @@ export function getColumn(NCBIData, columnNumber, type, group) {
 
 export function switchColumn(matrix, source, target) {
 	for (let i = 0; i < matrix.length; i++) {
-		[matrix[i][source], matrix[i][target]] = [matrix[i][target], matrix[i][source]];
+		if (matrix[i]) [matrix[i][source], matrix[i][target]] = [matrix[i][target], matrix[i][source]];
 		// let t = matrix[i][source];
 		// matrix[i][source] = matrix[i][target];
 		// matrix[i][target] = t;
