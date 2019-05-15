@@ -109,7 +109,7 @@ export default {
     }
   },
   methods: {
-    clearTableMethod() {
+    clearTableMethod() { // 在点击Data Selected:后面的刷新图标后，清空表格的选择和排序
       this.$nextTick(function() {
         this.$refs.slTable.clearSelection();
         this.$refs.slTable.clearSort();
@@ -137,7 +137,7 @@ export default {
               this.dataKey &&
               this.dataValue &&
               ("" + line[index]).indexOf(this.dataValue) < 0
-            ) {
+            ) { //根据不同页面传进来的筛选条件，跳过不匹配的数据
               continue;
             }
             let re = {};
@@ -152,7 +152,7 @@ export default {
         this.rawData = res.slice();
       }
     },
-    handleSortChange({ prop, order }) {
+    handleSortChange({ prop, order }) { // 排序句柄
       this.pageNum = 1;
       if (order === null) {
         this.tableData = this.rawData.slice();
@@ -178,7 +178,7 @@ export default {
         });
       }
     },
-    handleSelectionChange(selection) {
+    handleSelectionChange(selection) { // 多选句柄
       let ncNum = "",
         i = 0;
       for (let len = selection.length - 1; i < len; i++) {
@@ -189,7 +189,7 @@ export default {
       }
       this.$parent.changeNcNo(ncNum);
     },
-    setTableHeadWidth() {
+    setTableHeadWidth() { // 保证表头不换行显示
       this.tableHeadWidth = [];
       this.$nextTick(() => {
         if (this.$refs.tablehead0) {

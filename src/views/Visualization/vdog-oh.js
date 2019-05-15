@@ -49,11 +49,12 @@ function getHistory(NCBIData) {
 			let seriesLine = series[seriesIndex][re["SubGroup"].indexOf(line[2] + ", " + line[3])];
 			if (seriesLine[2] === 0) {
 				seriesLine[1] = line[12];
+				seriesLine[2] = line[6];
 			} else {
+				seriesLine[2] = (seriesLine[2] * seriesLine[0] + line[6]) / (seriesLine[0] + 1);
 				seriesLine[0]++;
 				seriesLine[1] += line[12];
 			}
-			seriesLine[2] = seriesLine[1] / seriesLine[0];
 		}
 	}
 	re["timeline"] = timeLine;

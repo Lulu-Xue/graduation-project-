@@ -4,7 +4,6 @@ export async function initPage(NCBIData, myChart, oldNcList, NCBIValues) {
     let ncList = oldNcList;
     if (!oldNcList) ncList = randomList(NCBIData, 500);
     let data = readDataToMatrix(NCBIData, ncList, NCBIValues);
-    console.log(data);
     switchColumn(data.cpData, 7, 0); // GC
     switchColumn(data.plData, 7, 0);
     switchColumn(data.mtData, 7, 0);
@@ -335,7 +334,6 @@ export async function initPage(NCBIData, myChart, oldNcList, NCBIValues) {
     };
 
     myChart.setOption(option);
-    console.log(myChart.getOption());
     let typeOnLegend = [];
     if (data.cpData.length == 0) {
         typeOnLegend.push({

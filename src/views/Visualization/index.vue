@@ -5,7 +5,7 @@
       <p>{{subtitle}}</p>
     </div>
     <section class="chart">
-      <div ref="chart" id="gogogo" v-if="refreshChart">
+      <div ref="chart" id="gogogo" v-if="refreshChart" :style="type === 'sl'?{minHeight:'auto'}:{}">
         <species-list v-if="type === 'sl'" ref="sl" :dataKey="dataKey" :dataValue="dataValue"/>
       </div>
       <div v-if="type === 'sl'" class="small-buttons">
@@ -278,8 +278,10 @@ export default {
     }
   },
   beforeDestroy() {
-    this.myChart.clear();
-    this.myChart.dispose();
+    if (this.myChart) {
+      this.myChart.clear();
+      this.myChart.dispose();
+    }
     window.removeEventListener("resize", this.resizeHandler);
     this.$parent.openLoading();
   }
